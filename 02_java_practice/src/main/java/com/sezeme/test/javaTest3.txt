@@ -1,0 +1,115 @@
+
+
+1. 2
+2. 3, 4
+3. 4, 5
+4.
+ (1) 추상클래스 : 여러 클래스의 공통된 기능에 대한 중복을 줄이고, 다형성 적용
+ (2) 인터페이스 : 메소드 정의 사용에 대한 표준화된 틀을 제공할 때 사용
+
+5. 4, 5 -> 클래스는 다중상속 안된다.
+6. @Override
+7. 2, 4 -> 더 넓은 범위로만 상속받을 수 있음
+8. 4 -> 클래스에도 static이 들어갈 수 있나?
+9. public final static
+10. 1
+11. 4 -> 이거 어디서 뭐 무시할 때 사용하는건데...! 이거 쓰면 null로 나오는데 뭐였지?
+12. 5
+13. -> 불변객체이기 때문에 안변한다.
+---
+ABC123
+After change:ABC123456
+---
+14. 4, 5, 1 -> 추상클래스는 객체 생성 불가능
+15.
+ (1) try-catch 구문으로 예외를 잡기.
+ (2) try-catch-finally 구문으로 예외를 잡기.
+ (3) try-catch with resource 구문으로 예외를 잡기.
+ (4) throws로 넘김
+
+16. 2, 나머지는 다 예외 처리가 이미 되어있음. IOException은 예외 처리를 강제한다.
+17. throw new Exception();
+18. 4
+19. 3, -> super()를 꼭 불러줘야 하나? 그럴 필요 없지??
+20. 동일한 인터페이스를 통해 여러 다양한 객체를 가룰 수 있는 것.
+하나의 타입으로 여러 타입을 다루는 기술
+21.
+ (1) 상속 불가
+ (2) 오버라이딩 불가
+ (3) 재대입 불가, 초기값 수정 불가
+
+22. 4
+23. instanceOf
+24.
+  (1) 메소드 오버로딩 개수를 줄일 수 있다.
+  (2) 하나의 타입으로 여러 타입을 처리할 수 있다.
+  (3) 오버라이딩된 메소드를 여러 타입별로 실행할 수 있다.
+  -> 같은 인터페이스로 여러 기능을 할 수있다.
+
+25.
+  (1) set : 중복 불가, 순서 저장 불가
+  (2) list : 순서 저장, 중복 가능
+  (3) map : 키 - 값 페어를 저장
+
+26. 직렬화
+27. 4 -> 공부
+28. BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+29.
+//예외처리용 클래스를 작성함
+public class ZeroException extends Exception
+{
+ public ZeroException(String message) {
+        super(message);
+}
+}
+public class Calculator {
+ public double divide(double a, double b) throws ZeroException
+{ //나눌 수 b가 0일 경우 ZeroException 발생시키는 소스 작성함
+    if(b == 0) throw new ZeroException("0으로 나눌 수 없습니다.");
+    return a / b;
+}
+}
+public class Exam29{
+public static void main(String[] args){
+ //divide() 메소드 사용과 관련된 예외처리 코드 작성함, throws 하지 말 것.
+    try {
+        System.out.println(new Calculator().divide(12.5, 0));
+    } catch (ZeroException e) {
+        System.out.println(e.getMessage());
+    }
+}
+}
+
+30.
+try {
+ Porperties prop = new Properties();
+ prop.load(new FileReader(“dbSource.txt”));
+ 중간 생략
+}catch(IOException | SQLException e){
+ e.printStackTrace();
+}
+
+31. HashMap<String, Book> hashMap = new HashMap<>();
+32.
+try( FileReader fr = new FileReader(“books.dat”)) {
+ 중간 생략
+}catch(IOException e){
+ e.printStackTrace();
+}
+
+33.
+
+Iterator<String> iter = map.keySet().iterator();
+while(iter.hasNext()){
+    System.out.println(map.get(iter.next));
+}
+혹은
+Iterator<Map.Entry<String, Book>> iter = map.entrySet().iterator();
+while(iter.hesNext()){
+Map.Entry<String, Book> entry = iter.next();
+System.out.println(entry.getKey() + “=” + entry.getValue());
+}
+
+
+
+

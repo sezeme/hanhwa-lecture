@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd"
+         version="6.0">
+    <!-- Servlet 등록 - 이름을 지어주고, 그 이름을 누가 가질건지 클래스도 작성. -->
+    <servlet>
+        <servlet-name>xmlmapping</servlet-name>
+        <servlet-class>com.sezeme.chap01lifecycle.section01.xml.LifeCycleTest</servlet-class>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+    <!-- Servlet Mapping - 어떤 요청이 오면 어떤 servlet으로 연결해야할지 -->
+    <servlet-mapping>
+        <servlet-name>xmlmapping</servlet-name>
+        <url-pattern>/xml-lifecycle</url-pattern>
+    </servlet-mapping>
+</web-app>
