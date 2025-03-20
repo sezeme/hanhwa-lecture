@@ -16,7 +16,8 @@ public class CookieRedirect extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        /* http의 무상태성 때문에 해당 객체와 cookiehandler의 req객체는 다른 객체*/
+        /* http의 무상태성 때문에 해당 객체와 cookiehandler의 req객체는 다른 객체
+        * => null 값이 나온다. */
         String firstName = req.getParameter("firstName");
         String lastName = req.getParameter("lastName");
         System.out.println("firstName = " + firstName + ", lastName = " + lastName);

@@ -16,8 +16,7 @@ public class SessionHandler extends HttpServlet {
         /* 서버 쪽에서 안전하게 관리할 수 있는 세션이라는 인스턴스를 통한 상태 유지 매커니즘이 제공 된다.
         * session을 찾아오기 위한 key 값이 cookie에서 관리되고 있다. */
         HttpSession session = req.getSession();
-        /* 세션 브라우저 당 한 개의 고유 아이디를 가지고
-하나의 인스턴스를이용한다.
+        /* 세션 브라우저 당 한 개의 고유 아이디를 가지고 하나의 인스턴스를이용한다.
         * 반복 요청 시 동일 session id를 반호나한다.
         * 단, 브라우저가 종료 되면 다른 session id가 된다.
         * session id는 cookie에 저장되어 있다. */
