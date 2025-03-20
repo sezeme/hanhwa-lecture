@@ -1,4 +1,4 @@
-package com.sezeme.section01.scope.subsection01.singleton;
+package com.sezeme.section02.initdestroy.subsection01.java;
 
 import com.sezeme.common.Product;
 import com.sezeme.common.ShoppingCart;
@@ -15,10 +15,8 @@ public class Application {
         Product milk = applicationContext.getBean("milk", Product.class);
         Product water = applicationContext.getBean("water", Product.class);
 
-        System.out.println("쇼핑 카트 객체 꺼내기 전");
         /* 쇼핑 카트를 꺼내 상품을 담는다. */
         ShoppingCart shoppingCart = applicationContext.getBean("cart", ShoppingCart.class);
-        System.out.println("쇼핑 카트 객체 꺼낸 후");
         shoppingCart.addItem(carpBread);
         shoppingCart.addItem(milk);
         System.out.println("cart에 담긴 물품 : " + shoppingCart.getItem());
@@ -27,5 +25,9 @@ public class Application {
         ShoppingCart shoppingCart2 = applicationContext.getBean("cart", ShoppingCart.class);
         shoppingCart2.addItem(water);
         System.out.println("cart에 담긴 물품 : " + shoppingCart2.getItem());
+
+        /* Spring 컨테이너 종료 전에 메인 스레드의 동작이 종료 되고 프로세스가 종료 되어
+        * destroy method가  확인 되지 않으므로 명시적으로 컨테이너를 종료 시켜서 확인한다. */
+        ((AnnotationConfigApplicationContext)applicationContext).close();
     }
 }
