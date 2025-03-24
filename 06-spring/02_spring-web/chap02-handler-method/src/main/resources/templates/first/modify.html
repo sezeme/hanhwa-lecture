@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>modify</title>
+</head>
+<body>
+<h1>RequestParam 으로 파라미터 값 전달 받기</h1>
+<h3>메뉴 수정하기</h3>
+<form action="modify" method="post">
+    수정 메뉴명: <input type="text" name="name"/><br>
+    수정 메뉴 가격: <input type="number" name="price"/><br>
+    수정 메뉴 카테고리:
+    <select name="categoryCode">
+        <option value="1">식사</option>
+        <option value="2">음료</option>
+        <option value="3">디저트</option>
+    </select><br>
+    <button>수정하기</button>
+</form>
+</body>
+</html>

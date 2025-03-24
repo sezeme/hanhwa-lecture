@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: chap01-request-mapping
+server:
+  port: 8001
