@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MenuMapper">
+
+    <!-- 조회한 컬럼과 자바 객체의 필드를 매핑시키기 위한 설정 -->
+    <resultMap id="menuResultMap" type="com.sezeme.section01.xmlconfig.MenuDTO">
+        <!-- id : pk에 해당하는 컬럼을 작성 -->
+        <id property="menuCode" column="menu_code"/>
+        <!-- result : pk 외의 일반 컬럼을 작성 -->
+        <result property="menuName" column="menu_name"/>
+        <result property="menuPrice" column="menu_price"/>
+        <result property="categoryCode" column="category_code"/>
+        <result property="orderableStatus" column="orderable_status"/>
+    </resultMap>
+    <select id="selectAllMenu" resultMap="menuResultMap">
+        SELECT
+               menu_code
+             , menu_name
+             , menu_price
+             , category_code
+             , orderable_status
+         FROM tbl_menu
+        WHERE orderable_status = 'Y'
+        ORDER BY menu_code
+    </select>
+
+    <select id="selectMenuByCode" resultMap="menuResultMap" parameterType="_int">
+        SELECT
+        menu_code
+        , menu_name
+        , menu_price
+        , category_code
+        , orderable_status
+        FROM tbl_menu
+        WHERE menu_code = #{ menuCode }
+        ORDER BY menu_code
+    </select>
+
+    <!--
+        id : 필수
+        resultMap or resultType은 조회 시에만 필요하며
+        DML 구문 실행 시에는 수행 된 행의 개수가 기본적으로 반환
+        parameterType : optional
+        자주 사용하는 타입이 있다면 config에서 별칭을 등록해서 사용 가능하며
+        그렇지 않다면 패키지명을 포함안 풀네임으로 작성해야 한다.
+     -->
+    <insert id="insertMenu" parameterType="MenuDTO">
+        INSERT INTO
+            tbl_menu (menu_name, menu_price, category_code, orderable_status)
+        VALUES
+            (#{ menuName }, #{ menuPrice }, #{ categoryCode }, 'Y')
+    </insert>
+
+    <update id="updateMenu" parameterType="MenuDTO">
+        UPDATE
+            tbl_menu
+           SET
+              menu_name = #{ menuName }
+            , menu_price = #{ menuPrice }
+            , category_code = #{ categoryCode }
+         WHERE menu_code = #{ menuCode }
+    </update>
+
+    <delete id="deleteMenu" parameterType="_int">
+        DELETE FROM
+            tbl_menu
+         WHERE menu_code = #{ menuCode }
+    </delete>
+
+</mapper>
