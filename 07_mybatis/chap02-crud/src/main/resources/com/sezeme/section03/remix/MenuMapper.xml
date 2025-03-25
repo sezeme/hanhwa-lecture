@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sezeme.section03.remix.MenuMapper">
+    <!--
+        Mapper Interface 와 Mapper XML 파일을 연동하는 방법
+        1. 인터페이스와 xml 파일이 동일 패키지에 동일한 이름으로 위치
+        2. 인터페이스의 풀네임을 namespace에 지정
+        3. 인터페이스 메소드의 이름과 id가 일치, 리턴 타입이 일치하는 쿼리문을 모두 작성
+    -->
+
+    <select id="selectAllMenu" resultType="com.sezeme.section03.remix.MenuDTO">
+        SELECT
+        menu_code
+        , menu_name
+        , menu_price
+        , category_code
+        , orderable_status
+        FROM tbl_menu
+        WHERE orderable_status = 'Y'
+        ORDER BY menu_code
+    </select>
+
+    <select id="selectMenuByMenuCode" resultType="com.sezeme.section03.remix.MenuDTO" parameterType="_int">
+        SELECT
+        menu_code
+        , menu_name
+        , menu_price
+        , category_code
+        , orderable_status
+        FROM tbl_menu
+        WHERE menu_code = #{ menuCode }
+    </select>
+
+    <insert id="insertMenu" parameterType="com.sezeme.section03.remix.MenuDTO">
+        INSERT INTO
+        tbl_menu (menu_name, menu_price, category_code, orderable_status)
+        VALUES
+        (#{ menuName }, #{ menuPrice }, #{ categoryCode }, 'Y')
+    </insert>
+
+    <update id="updateMenu" parameterType="com.sezeme.section03.remix.MenuDTO">
+        UPDATE
+        tbl_menu
+        SET
+        menu_name = #{ menuName }
+        , menu_price = #{ menuPrice }
+        , category_code = #{ categoryCode }
+        WHERE menu_code = #{ menuCode }
+    </update>
+
+    <delete id="deleteMenu" parameterType="_int">
+        DELETE FROM
+        tbl_menu
+        WHERE menu_code = #{ menuCode }
+    </delete>
+
+</mapper>
