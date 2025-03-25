@@ -28,11 +28,11 @@ public class MenuService {
     public MenuDTO selectMenuByMenuCode(int menuCode) {
         SqlSession sqlSession = getSqlSession();
 
-        List<MenuDTO> menuList = MenuDAO.selectMenuByMenuCode(sqlSession, menuCode);
+        MenuDTO menu = MenuDAO.selectMenuByMenuCode(sqlSession, menuCode);
 
         sqlSession.close();
 
-        return menuList.get(0); // null이면 어떻게 하지?
+        return menu; // null이면 어떻게 하지?
     }
 
     public boolean registMenu(MenuDTO menu) {

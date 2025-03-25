@@ -10,10 +10,9 @@ public class MenuDAO {
         return sqlSession.selectList("MenuMapper.selectAllMenu");
     }
 
-    public static List<MenuDTO> selectMenuByMenuCode(SqlSession sqlSession, int menuCode) {
+    public static MenuDTO selectMenuByMenuCode(SqlSession sqlSession, int menuCode) {
         /* 메소드의 두 번째 인수로 SQL 구문 수행 시 필요한 객체를 전달 */
-        return sqlSession.selectList("MenuMapper.selectMenuByCode", menuCode);
-
+        return sqlSession.selectOne("MenuMapper.selectMenuByCode", menuCode);
     }
 
     public int insertMenu(SqlSession sqlSession, MenuDTO menu) {
