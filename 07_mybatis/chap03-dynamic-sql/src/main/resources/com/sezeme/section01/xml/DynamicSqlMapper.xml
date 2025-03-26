@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sezeme.section01.xml.DynamicSqlMapper">
+    <select id="selectMenuByPrice" resultType="com.sezeme.common.MenuDTO">
+        SELECT
+        menu_code
+        , menu_name
+        , menu_price
+        , category_code
+        , orderable_status
+        FROM tbl_menu
+        WHERE orderable_status = 'Y'
+        <if test="price gte 0 and price lte 10000">
+            <![CDATA[
+            AND menu_price < #{ price }
+            ]]>
+        </if>
+        <if test="price gt 10000 and price lte 20000">
+            AND menu_price BETWEEN 10000 AND #{ price }
+        </if>
+        <if test="price gt 20000 and price lte 30000">
+            AND menu_price BETWEEN 20000 AND #{ price }
+        </if>
+        <if test="price gt 30000">
+            AND menu_price BETWEEN 30000 AND #{ price }
+        </if>
+        ORDER BY menu_code
+    </select>
+
+    <select id="searchMenu" resultType="com.sezeme.common.MenuDTO">
+        SELECT
+        menu_code
+        , menu_name
+        , menu_price
+        , category_code
+        , orderable_status
+        FROM tbl_menu
+        <if test="condition == 'category'">
+            JOIN tbl_category USING (category_code)
+        </if>
+        WHERE orderable_status = 'Y'
+        <if test="condition == 'name'">
+            AND menu_name LIKE CONCAT('%', #{ value }, '%')
+        </if>
+        <if test="condition == 'category'">
+            AND category_name LIKE CONCAT('%', #{ value }, '%')
+        </if>
+        ORDER BY menu_code
+    </select>
+
+    <select id="searchMenuBySupCategory" resultType="com.sezeme.common.MenuDTO">
+        SELECT
+        menu_code
+        , menu_name
+        , menu_price
+        , category_code
+        , orderable_status
+        FROM tbl_menu
+        WHERE orderable_status = 'Y'
+        <choose>
+            <when test="value == '식사'">
+                AND category_code IN (4,5,6,7)
+            </when>
+            <when test="value == '음료'">
+                AND category_code IN (8,9,10)
+            </when>
+            <otherwise>
+                AND category_code IN (11,12)
+            </otherwise>
+        </choose>
+        ORDER BY menu_code
+    </select>
+
+    <select id="searchMenuByRandomMenuCode" resultType="com.sezeme.common.MenuDTO">
+        SELECT
+        menu_code
+        , menu_name
+        , menu_price
+        , category_code
+        , orderable_status
+        FROM tbl_menu
+        WHERE menu_code IN
+        <foreach collection="randomMenuCodeList" item="menuCode" open="(" separator="," close=")">
+            #{ menuCode }
+        </foreach>
+
+    </select>
+
+    <select id="searchMenuByNameOrCategory" resultType="com.sezeme.common.MenuDTO">
+        SELECT
+              menu_code
+             , menu_name
+             , menu_price
+             , category_code
+             , orderable_status
+          FROM tbl_menu
+        <!--
+        문제 상황 : 전달 되는 값에 따라 where 문자만 남거나 and 문자로 시작하는 등의 구문 오류가 발생할 수 있다.
+        <if test="nameValue != null">
+            WHERE menu_name LIKE CONCAT('%', #{ nameValue }, '%')
+        </if>
+        <if test="categoryValue != null">
+            AND category_code = #{ categoryValue }
+        </if>
+        -->
+        <!-- 해결 방법 1. <where> 태그 사용 -->
+        <where>
+            <if test="nameValue != null">
+                menu_name LIKE CONCAT('%', #{ nameValue }, '%')
+            </if>
+            <if test="categoryValue != null">
+                AND category_code = #{ categoryValue }
+            </if>
+        </where>
+
+        <!-- 해결 방법 2. <trim> 태그 사용 -->
+<!--        <trim prefix="WHERE" prefixOverrides="AND | OR">-->
+<!--            <if test="nameValue != null">-->
+<!--                menu_name LIKE CONCAT('%', #{ nameValue }, '%')-->
+<!--            </if>-->
+<!--            <if test="categoryValue != null">-->
+<!--                AND category_code = #{ categoryValue }-->
+<!--            </if>-->
+<!--        </trim>-->
+
+    </select>
+
+    <update id="updateMenu">
+        UPDATE tbl_menu
+        <!-- 문제 상황 : SET 구문이 남거나, 문장 뒤 ,가 남아 구문오류가 발생할 수 있다. -->
+        <!-- 해결 방법 1. <set> 태그 사용 -->
+
+<!--        <set>-->
+<!--            <if test="menuName != null and menuName != ''">-->
+<!--                menu_name = #{ menuName },-->
+<!--            </if>-->
+<!--            <if test="categoryCode != null and categoryCode gt 0">-->
+<!--                category_code = #{ categoryCode },-->
+<!--            </if>-->
+<!--            <if test="orderableStatus != null and orderableStatus gt 0">-->
+<!--                orderable_status = #{ orderableStatus }-->
+<!--            </if>-->
+<!--        </set>-->
+        <!-- 해결 방법 2. <trim> 태그 사용 -->
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="menuName != null and menuName != ''">
+                menu_name = #{ menuName },
+            </if>
+            <if test="categoryCode != null and categoryCode gt 0">
+                category_code = #{ categoryCode },
+            </if>
+            <if test="orderableStatus != null and orderableStatus gt 0">
+                orderable_status = #{ orderableStatus }
+            </if>
+        </trim>
+        WHERE menu_code = #{ menuCode }
+    </update>
+
+
+
+
+
+
+</mapper>
