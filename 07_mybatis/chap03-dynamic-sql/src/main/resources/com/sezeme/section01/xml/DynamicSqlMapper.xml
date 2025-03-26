@@ -3,6 +3,11 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.sezeme.section01.xml.DynamicSqlMapper">
+
+    <!--
+     필드명 == 컬럼명 <- 자동매핑
+     config <- 언더스코어 == 카멜케이스 설정 활성화하면 그거까지 반영해서 자동매핑
+     -->
     <select id="selectMenuByPrice" resultType="com.sezeme.common.MenuDTO">
         SELECT
         menu_code

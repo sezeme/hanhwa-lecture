@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sezeme.section01.xmlmapper.ElementTestMapper">
+    <!-- 1. resultMap 테스트
+    자동매핑 시 : result Type
+    명시적 결과 : result Map -->
+
+    <!--
+        autoMapping : 조회 결과를 type에 자동 매핑할지 선택
+        extends : 작성 된 resultMap을 확장(상속)하는 resultMap 작성
+    -->
+
+    <resultMap id="menuResultMap1" type="MenuDTO" autoMapping="false">
+        <id property="menuCode" column="menu_code"/>
+        <result property="menuName" column="menu_name"/>
+    </resultMap>
+
+    <resultMap id="menuResultMap2" type="MenuDTO" extends="menuResultMap1" autoMapping="false">
+        <result property="menuPrice" column="menu_price"/>
+        <result property="categoryCode" column="category_code"/>
+    </resultMap>
+
+    <select id="selectResultMapTest" resultMap="menuResultMap2">
+        SELECT
+        menu_code
+        , menu_name
+        , menu_price
+        , category_code
+        , orderable_status
+        FROM tbl_menu
+        WHERE orderable_status = 'Y'
+    </select>
+
+    <!--
+        <association> : 1 : 1 관계의 매핑에서 사용 되는 엘리먼트
+    -->
+    <resultMap id="categoryResultMap" type="CategoryDTO">
+        <id property="categoryCode" column="category_code"/>
+        <result property="categoryName" column="category_name"/>
+        <result property="refCategoryCode" column="ref_category_code"/>
+    </resultMap>
+
+    <resultMap id="menuAndCategoryResultMap" type="MenuAndCategoryDTO">
+        <id property="menuCode" column="menu_code"/>
+        <result property="menuName" column="menu_name"/>
+        <result property="menuPrice" column="menu_price"/>
+        <!--
+            id, result 보다 위에 작성하면 컴파일 에러 발생
+            (1) 별도의 resultMap을 참조해서 매핑
+            (2) 엘리먼트 내부에 작성해서 매핑
+         -->
+        <!-- <association property="category" resultMap="categoryResultMap"/> -->
+        <association property="category" resultMap="categoryResultMap">
+            <id property="categoryCode" column="category_code"/>
+            <result property="categoryName" column="category_name"/>
+            <result property="refCategoryCode" column="ref_category_code"/>
+        </association>
+    </resultMap>
+
+    <select id="selectResultMapAssociationTest" resultMap="menuAndCategoryResultMap">
+        SELECT
+        a.menu_code
+        , a.menu_name
+        , a.menu_price
+        , a.category_code
+        , a.orderable_status
+        , b.category_code
+        , b.category_name
+        , b.ref_category_code
+        FROM tbl_menu a
+        JOIN tbl_category b ON (a.category_code = b.category_code)
+        WHERE orderable_status = 'Y'
+        ORDER BY a.menu_code
+    </select>
+
+    <!-- <collection> : 1 : N 의 관계를 매핑 -->
+    <resultMap id="categoryAndMenuResultMap" type="CategoryAndMenuDTO">
+        <id property="categoryCode" column="category_code"/>
+        <result property="categoryName" column="category_name"/>
+        <result property="refCategoryCode" column="ref_category_code"/>
+        <!--
+            id, result 보다 위에 작성하면 컴파일 에러 발생
+            (1) 별도의 resultMap을 참조해서 매핑
+            (2) 엘리먼트 내부에 작성해서 매핑
+        -->
+        <!-- <collection property="menuList" resultMap="menuResultMap2"/> -->
+        <collection property="menuList" ofType="MenuDTO">
+            <id property="menuCode" column="menu_code"/>
+            <result property="menuName" column="menu_name"/>
+            <result property="menuPrice" column="menu_price"/>
+            <result property="categoryCode" column="category_code"/>
+            <result property="orderableStatus" column="orderable_status"/>
+        </collection>
+    </resultMap>
+
+    <select id="selectResultMapCollectionTest" resultMap="categoryAndMenuResultMap">
+        SELECT
+          a.category_code
+        , a.category_name
+        , a.ref_category_code
+        , b.menu_code
+        , b.menu_name
+        , b.menu_price
+        , b.orderable_status
+        FROM tbl_category a
+        LEFT JOIN tbl_menu b ON (a.category_code = b.category_code)
+        WHERE  b.orderable_status = 'Y'
+        ORDER BY a.category_code
+    </select>
+</mapper>
