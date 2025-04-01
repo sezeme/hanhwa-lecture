@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>search</title>
+</head>
+<body>
+    <h1>메뉴 목록 조회</h1>
+    <table>
+        <tr th:each="menu : ${menuList}">
+            <td th:text="${menu.menuCode}"></td>
+            <td th:text="${menu.menuName}"></td>
+            <td th:text="${menu.menuPrice}"></td>
+            <td th:text="${menu.categoryCode}"></td>
+            <td th:text="${menu.orderableStatus}"></td>
+        </tr>
+    </table>
+</body>
+</html>
