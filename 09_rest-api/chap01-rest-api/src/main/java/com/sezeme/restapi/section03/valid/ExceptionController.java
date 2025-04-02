@@ -15,9 +15,9 @@ public class ExceptionController {
         String code = "ERROR_CODE_00000";
         String description = "회원 정보 조회 실패";
         String detail = e.getMessage();
-        return new ResponseEntity <> (new ErrorResponse(
+        return new ResponseEntity<>(new ErrorResponse(
                 code, description, detail
-        ),HttpStatus.NOT_FOUND);
+        ), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -29,15 +29,15 @@ public class ExceptionController {
         detail = e.getBindingResult().getFieldError().getDefaultMessage();
         String bindingResultCode = e.getBindingResult().getFieldError().getCode();
         switch (bindingResultCode) {
-            case "NotNull" :
+            case "NotNull":
                 code = "ERROR_CODE_00001";
                 description = "필수 값이 누락되었습니다.";
                 break;
-            case "NotBlank" :
+            case "NotBlank":
                 code = "ERROR_CODE_00002";
                 description = "필수 값이 공백으로 처리되었습니다.";
                 break;
-            case "Size" :
+            case "Size":
                 code = "ERROR_CODE_00003";
                 description = "알맞은 크기의 값이 입력 되지 않았습니다.";
                 break;
