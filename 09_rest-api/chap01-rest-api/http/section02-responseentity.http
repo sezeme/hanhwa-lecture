@@ -1,0 +1,9 @@
+### 신규 유저 등록
+POST http://localhost:8080/entity/users
+Content-Type: application/json
+
+{
+  "id" : "user04",
+  "pwd" : "pass04",
+  "name" : "신사임당"
+}

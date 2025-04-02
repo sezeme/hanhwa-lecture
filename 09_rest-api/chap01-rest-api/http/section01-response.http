@@ -1,0 +1,11 @@
+### List 응답
+GET http://localhost:8080/response/list
+
+### Map 응답
+GET http://localhost:8080/response/map
+
+### Image 응답
+GET http://localhost:8080/response/image
+
+### Entity 응답
+GET http://localhost:8080/response/entity

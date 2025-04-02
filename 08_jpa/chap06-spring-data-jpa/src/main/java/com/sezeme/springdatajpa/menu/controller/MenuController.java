@@ -92,7 +92,16 @@ public class MenuController {
 
     @PostMapping("/modify")
     public String modifyMenu(@ModelAttribute MenuDTO menuDTO) {
-        menuService.registMenu(menuDTO);
+        menuService.modifyMenu(menuDTO);
+        return "redirect:/menu/" + menuDTO.getMenuCode();
+    }
+
+    @GetMapping("/delete")
+    public void deletePage() {}
+
+    @PostMapping("/delete")
+    public String deleteMenu(@RequestParam int menuCode) {
+        menuService.deleteMenu(menuCode);
         return "redirect:/menu/list";
     }
 }
