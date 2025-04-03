@@ -1,0 +1,37 @@
+package com.sezeme.cqrs.product.command.command.application.controller;
+
+import com.sezeme.cqrs.common.dto.ApiResponse;
+import com.sezeme.cqrs.product.command.command.application.dto.response.ProductCommandResponse;
+import com.sezeme.cqrs.product.command.product.command.application.dto.request.ProductCreateRequest;
+import com.sezeme.cqrs.product.command.product.command.application.service.ProductCommandService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+
+@RestController
+@RequiredArgsConstructor
+public class ProductCommandController {
+
+    private final ProductCommandService productCommandService;
+
+    @PostMapping("/products")
+    public ResponseEntity<ApiResponse<ProductCommandResponse>> createProduct(
+            @RequestPart @Validated ProductCreateRequest productCreateRequest,
+            @RequestPart MultipartFile productImg
+            ) {
+        Long productCode = productCommandService.createProduct(productCreateRequest, productImg);
+
+        ProductCommandResponse response = ProductCommandResponse.builder()
+                .productCode(productCode)
+                .build();
+
+        return ResponseEntity
+                .status(HttpStatus.CREATED) // 201 상태코드 설정
+                .body(ApiResponse.success(response));
+    }
+}

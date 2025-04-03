@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sezeme.cqrs.product.query.mapper.ProductMapper">
+    <select id="selectProductByCode" resultType="ProductDto">
+        SELECT
+            a.product_code,
+            a.product_name,
+            a.product_price,
+            a.product_description,
+            b.category_code as "category.category_code",
+            b.category_name as "category.category_name",
+            a.product_image_url,
+            a.product_stock
+        FROM tbl_product a
+        JOIN tbl_category b ON (a.category_code = b.category_code)
+        WHERE product_code = #{ productCode }
+        AND status = 'USABLE'
+    </select>
+    <select id="selectProducts" resultType="ProductDto">
+        SELECT
+        a.product_code,
+        a.product_name,
+        a.product_price,
+        a.product_description,
+        b.category_code as "category.category_code",
+        b.category_name as "category.category_name",
+        a.product_image_url,
+        a.product_stock
+        FROM tbl_product a
+        JOIN tbl_category b ON (a.category_code = b.category_code)
+        WHERE status = 'USABLE'
+        <if test="categoryCode != null">
+            AND a.category_code = #{ categoryCode }
+        </if>
+        <if test="productName != null">
+            AND a.product_name LIKE CONCAT('%', #{ productName }, '%')
+        </if>
+        ORDER BY a.product_code DESC
+        LIMIT #{ limit } OFFSET #{ offset }
+    </select>
+    <select id="countProducts" resultType="long">
+        SELECT COUNT(*)
+        FROM tbl_product
+        WHERE status = 'USABLE'
+        <if test="categoryCode != null">
+            AND category_code = #{ categoryCode }
+        </if>
+        <if test="productName != null">
+            AND product_name LIKE CONCAT('%', #{ productName }, '%')
+        </if>
+    </select>
+</mapper>
