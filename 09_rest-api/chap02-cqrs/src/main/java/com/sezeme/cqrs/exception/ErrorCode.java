@@ -14,7 +14,9 @@ public enum ErrorCode {
     // 그 외 기타 오류
     INTERNAL_SERVER_ERROR("50000", "내부 서버 오류입니다.", HttpStatus.INTERNAL_SERVER_ERROR),
     FILE_SAVE_ERROR("20001", "파일 저장에 실패했습니다.", HttpStatus.INTERNAL_SERVER_ERROR ),
-    FILE_DELETE_ERROR("20001", "파일 삭제에 실패했습니다.", HttpStatus.INTERNAL_SERVER_ERROR );
+    FILE_DELETE_ERROR("20001", "파일 삭제에 실패했습니다.", HttpStatus.INTERNAL_SERVER_ERROR ),
+
+    VALIDATION_ERROR("40001", "입력 값 검증 오류입니다.", HttpStatus.BAD_REQUEST);
 
     private final String code;
     private final String message;

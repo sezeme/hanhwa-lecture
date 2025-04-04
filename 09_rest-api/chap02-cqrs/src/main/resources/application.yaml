@@ -10,8 +10,7 @@ mybatis:
     map-underscore-to-camel-case: true
   mapper-locations: mappers/**/*.xml
   type-aliases-package: com.sezeme.cqrs.product.query.dto
-#  ???? ?? ? ??
 
 image:
-  image-dir: C/Repositories/hanhwa/my-lecture/09_rest-api/productimgs
+  image-dir: C:/Repositories/hanhwa/my-lecture/09_rest-api/productimgs
   image-url: http://localhost:8080/productimgs
