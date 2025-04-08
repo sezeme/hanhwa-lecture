@@ -50,7 +50,7 @@ public class ProductCommandService {
     ) {
         Product product = productRepository.findById(productCode)
                 .orElseThrow(() -> new BusinessException(ErrorCode.PRODUCT_NOT_FOUND));
-        System.out.println(productRepository.findById(productCode));
+
         /* 파일이 넘어오면 수정, 넘어오지 않으면 기존 파일 그대로 유지 */
         if(productImg != null) {
             String replaceFileName = fileStorageService.storeFile(productImg);

@@ -33,7 +33,7 @@ public class ProductQueryService {
                 .build();
     }
 
-    /* 상품 상세 조회 */
+    /* 상품 목록 조회 */
     @Transactional(readOnly = true)
     public ProductListResponse getProducts(ProductSearchRequest productSearchRequest) {
 

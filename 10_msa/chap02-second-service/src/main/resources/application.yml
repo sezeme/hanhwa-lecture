@@ -1,0 +1,15 @@
+server:
+  port: 0
+
+spring:
+  application:
+    name: 2nd-service
+
+eureka:
+  instance:
+    instance-id: ${spring.application.name}:${spring.instance.instance-id:${random.value}}
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka

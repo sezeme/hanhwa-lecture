@@ -40,11 +40,11 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(response, errorCode.getHttpStatus());
     }
 
-    @ExceptionHandler(Exception.class)
+/*    @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiResponse<Void>> handleException(BusinessException e) {
         ErrorCode errorCode = ErrorCode.INTERNAL_SERVER_ERROR;
         ApiResponse<Void> response
                 = ApiResponse.failure(errorCode.getCode(), errorCode.getMessage());
         return new ResponseEntity<>(response, errorCode.getHttpStatus());
-    }
+    }*/
 }

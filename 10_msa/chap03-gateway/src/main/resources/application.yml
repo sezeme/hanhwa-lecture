@@ -1,0 +1,44 @@
+# Server Port 고정 (client 가 사용하는 단일 진입점이므로
+server:
+  port: 8000
+spring:
+  application:
+    name: gateway-server
+  cloud:
+    gateway:
+      routes:
+        - id: 1st-service
+          # http://ip:port의 형태로도 설정할 수 있지만 매번 변경되므로 서비스의 이름을 통해 설정
+          # lb: 는 로드밸런싱을 의미한다
+          uri: lb://1ST-SERVICE
+          # 요청 경로가 이 패턴과 일치하는 경우 지금의 route 설정이 활성화 된다.
+          # 각 서비스 구분을 위해 필요하긴 함.
+          predicates:
+            - Path=/first-service/**
+          # 요청이나 응답에 대해 수행할 필터 설정
+          # /first-service/health 요청을 /health로 변경해서 처리
+          filters:
+            - RewritePath=/first-service/(?<segment>.*), /$\{segment}
+            # 요청 헤더에 'first-request' 라는 이름의 헤더를 'first-request-value' 라는 값으로 추가
+            - AddRequestHeader=first-request, first-request-value
+            - AddResponseHeader=first-response, first-response-value
+        - id: 2nd-service
+          # http://ip:port의 형태로도 설정할 수 있지만 매번 변경되므로 서비스의 이름을 통해 설정
+          # lb: 는 로드밸런싱을 의미한다
+          uri: lb://2ND-SERVICE
+          # 요청 경로가 이 패턴과 일치하는 경우 지금의 route 설정이 활성화 된다.
+          # 각 서비스 구분을 위해 필요하긴 함.
+          predicates:
+            - Path=/second-service/**
+          # 요청이나 응답에 대해 수행할 필터 설정
+          # /first-service/health 요청을 /health로 변경해서 처리
+          filters:
+            - RewritePath=/second-service/(?<segment>.*), /$\{segment}
+            - AddRequestHeader=second-request, second-request-value
+            - AddResponseHeader=second-response, second-response-value
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka
