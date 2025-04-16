@@ -1,0 +1,39 @@
+# Server Port 고정 (Client 단일 진입점으로 변경되면 안되는 속성)
+server:
+  port: 8000
+spring:
+  application:
+    name: gateway-server
+  cloud:
+    gateway:
+      routes:
+        - id: 1st-service
+          # uri는 http://ip:port 와 같은 형태로도 설정할 수도 있지만
+          # 인스턴스의 주소는 변경 가능성이 있으므로 service name 으로 설정한다.
+          # lb:// 의 의미는 로드 밸런싱 하겠다는 의미이다.
+          uri: lb://1ST-SERVICE
+          predicates:
+            # 아래의 경로로 요청이 왔을 때 해당 라우팅 설정을 동작 시킨다.
+            - Path=/first-service/**
+          # 단일 진입점에서 제공되는 설정 값을 통해 다양한 filter 처리를 할 수 있다.
+          filters:
+            # /first-service/health 요청을 /health 로 재작성 하는 필터
+            - RewritePath=/first-service/(?<segment>.*), /$\{segment}
+            # 요청 : 'first-request' 헤더에 'first-request-value' 값을 추가하는 필터
+            - AddRequestHeader=first-request, first-request-value
+            # 응답 : 'first-response' 헤더에 'first-response-value' 값을 추가하는 필터
+            - AddResponseHeader=first-response, first-response-value
+        - id: 2nd-service
+          uri: lb://2ND-SERVICE
+          predicates:
+            - Path=/second-service/**
+          filters:
+            - RewritePath=/second-service/(?<segment>.*), /$\{segment}
+            - AddRequestHeader=second-request, second-request-value
+            - AddResponseHeader=second-response, second-response-value
+eureka:
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka

@@ -25,6 +25,7 @@ public class ProductCommandService {
 
     @Value("${image.image-url}")
     private String IMAGE_URL;
+
     /* 상품 등록 */
     @Transactional
     public Long createProduct(

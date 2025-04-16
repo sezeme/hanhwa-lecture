@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>표 태그 실습</title>
+    <style>
+        thead {
+          background-color: aqua;
+        }
+        tbody {
+          background-color: orange;
+        }
+        tfoot {
+          background-color: yellow;
+        }
+    </style>
+</head>
+<body>
+<table border = "1">
+    <thead>
+    <tr>
+        <th colspan="5">하수정 보석 컬렉션</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <th rowspan="5">제품리스트</th>
+        <th>코드</th>
+        <th>분류</th>
+        <th>가격</th>
+        <th>구매가능 개수</th>
+    </tr>
+    <tr>
+        <td>01-468</td>
+        <td>가을</td>
+        <td>2000000원</td>
+        <td>1068</td>
+    </tr>
+    <tr>
+        <td>01-469</td>
+        <td>가을</td>
+        <td>150000원</td>
+        <td>1700</td>
+    </tr>
+    <tr>
+        <td>01-470</td>
+        <td>여름</td>
+        <td>950,000원</td>
+        <td>2500</td>
+    </tr>
+    <tr>
+        <td>01-471</td>
+        <td>봄</td>
+        <td>120,000원</td>
+        <td>3200</td>
+    </tr>
+    </tbody>
+    <tfoot>
+    <tr>
+        <td colspan="3">총합</td>
+        <td>1,420,000원</td>
+        <td>8468</td>
+    </tr>
+    </tfoot>
+
+</table>
+</body>
+</html>
