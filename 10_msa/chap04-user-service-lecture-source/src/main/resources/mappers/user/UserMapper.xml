@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ohgiraffers.userservice.query.mapper.UserMapper">
+    <select id="findUserByUsername" resultType="UserDTO">
+        SELECT username, role FROM users WHERE username = #{ username }
+    </select>
+
+    <select id="findAllUsers" resultType="UserDTO">
+        SELECT username, role FROM users WHERE role = 'USER'
+    </select>
+
+    <select id="findUserById" resultType="UserDTO">
+        SELECT * FROM users WHERE id = #{userId}
+    </select>
+</mapper>
