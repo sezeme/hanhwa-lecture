@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .test1 {
+            background: yellow;
+            color: black;
+        }
+        div {
+            width: 300px;
+            height: 300px;
+            background: darkviolet;
+        }
+        #test2 {
+            background: plum;
+            color: darkblue;
+        }
+        .test2 {
+            background: blue !important;
+            color: white !important;
+        }
+    </style>
+    <title>CSS 선택자 우선순위</title>
+</head>
+<body>
+<h1>선택자 우선순위</h1>
+<p>기본적으로 css 속성은 위에서부터 아래로 적용이 되지만, 같은 태그에 여러 개의 css속성이
+    설정된 경우에는 우선순위에 따라 스타일이 적용된다.
+</p>
+<pre>태그 선택자 < 클래스 선택자 < 아이디 선택자 < 인라인 선택자 < !important 순서로
+우선순위를 가진다.</pre>
+<hr>
+<h2>선택자 우선순위 테스트</h2>
+<!-- div#test1.test1{우선순위 테스트1} -->
+<div id="test1" class="test1">우선순위 테스트1</div>
+<!-- p#test2.test2[style="background: yellowgreen"]{우선순위 테스트 2} -->
+<p id="test2" class="test2" style="background: yellowgreen;">우선순위 테스트 2</p>
+</body>
+</html>
