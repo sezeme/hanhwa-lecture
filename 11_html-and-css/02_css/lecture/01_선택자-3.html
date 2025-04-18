@@ -3,6 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <title>CSS 선택자3</title>
+    <style>
+        /* 일반 구조 선택자 */
+        #test1 :first-child {
+            background: red;
+        }
+        #test1 :last-child {
+            background: green;
+        }
+        #test1 :nth-child(2n) {
+            background: salmon;
+        }
+        #test1 :nth-last-child(4) {
+            background: orange;
+        }
+        /* 형태 구조 선택자 */
+        #test2 :first-of-type {
+            background: red;
+        }
+        #test2 :last-of-type {
+            background: green;
+        }
+        #test2 :nth-of-type(2n) {
+            background: salmon;
+        }
+        #test2 :nth-last-of-type(4) {
+            background: orange;
+        }
+        /* 부정 선택자 */
+        #test3 p:not(:nth-child(2n-1)) {
+            background: orange;
+        }
+        /* 문자 선택자 */
+        #test4 p:first-letter {
+            font-size: 2em;
+        }
+        #test4 p:first-line {
+            background: coral;
+        }
+        /* 태그 뒤에 위치하는 공간을 선택 */
+        #test4 p:after {
+            content : "@@@ 태그 뒤에 추가 @@@";
+        }
+        #test4 p::selection {
+            background: yellow;
+        }
+        #test4 p {
+            counter-increment: count 1;
+        }
+        #test4 p:before {
+            content: counter(count);
+
+        }
+
+    </style>
 </head>
 <body>
 <h2>일반 구조 선택자</h2>
@@ -42,7 +96,8 @@
 <h2>문자 선택자</h2>
 <p>태그 내부에서 특정 조건의 문자를 선택하는 선택자</p>
 <div id="test4">
-    <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, m
+    <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, m</p>
+    <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, m</p>
 </div>
 </body>
 </html>

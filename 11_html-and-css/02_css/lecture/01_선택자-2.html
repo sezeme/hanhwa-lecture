@@ -3,6 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <title>CSS 선택자2</title>
+    <style>
+        /* 속성 값과 일치하는 요소 선택 */
+        div[name=name2] {
+            background: orange;
+        }
+        /* 속성 안의 값이 특정 값을 단어(띄어쓰기 단위)로 포함 */
+        div[name~=name1] {
+            background: yellow;
+        }
+        /* 속성 안의 값이 특정 값과 일치하거나 '-' 문자가 뒤에
+        작성 된 요소 선택 */
+        div[class|=class] {
+            background: cyan;
+        }
+        /* 속성 값을 가지고 있으며 접두사로 특정 값이 포함 되는
+        요소 선택 */
+        div[name^=name] {
+            background: blue;
+        }
+        /* 속성 안의 값이 특정 값으로 끝나는 요소 선택 */
+        div[class$=class] {
+            color : white;
+        }
+        /* 속성 안의 값이 특정 값을 포함하는 요소 선택 */
+        div[class*=div] {
+            background: yellow;
+        }
+        /* 자손 선택자 */
+        #test1>h4 {
+            background: hotpink;
+        }
+        #test1>ul>li {
+            background: yellow;
+        }
+        /* 후손 선택자 */
+        #test1 ul {
+            background: gray;
+        }
+        /* 동일 선택자를 다시 작성해도 문제 없음 */
+        #test1 ul {
+            color: white;
+        }
+        /* 동위 선택자 */
+        #div-test1 {
+            background: red;
+        }
+        #div-test1 + div {
+            background: hotpink;
+        }
+        /*#div-test2 ~ div {
+            background: purple;
+        }*/
+        /* 반응 선택자 */
+        #active-test, #hover-test {
+            width: 150px;
+            height: 150px;
+            background: orange;
+        }
+        /* 이벤트 관련 가상 선택자 :active */
+        #active-test:active {
+            background: yellow;
+            color: white;
+        }
+        /* 이벤트 관련 가상 선택자 :hover */
+        #hover-test:hover {
+            background: yellow;
+            color: white;
+        }
+        input[type=checkbox]:checked {
+            width: 50px;
+            height: 50px;
+        }
+        #userId:focus, #userPwd:focus {
+            background: hotpink;
+        }
+        option:disabled {
+            background: red;
+        }
+        option:enabled {
+            background: green;
+        }
+    </style>
 </head>
 <body>
 <h2>기본 속성 선택자</h2>
