@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- meta tag : metadata(정보에 대한 정보) 제공
+    화면에 표시되지는 않지만 검색 엔진이나 브라우저에 읽힌다. -->
+    <meta charset="UTF-8">
+    <!-- 뷰 포트 : 화면 상의 화상 표시 영역
+    너비를 디바이스에 맞추고 기본 배율을 1로 설정.
+    데스크탑 화면과 모바일의 뷰 포트는 차이가 있기 때문에 필요한 설정이다. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2_column</title>
+    <!-- 외부 스타일 시트 링크 -->
+    <link href="../resources/css/style.css" rel="stylesheet" type="text/css">
+    <!-- favicon 설정 (Real Favicon Generator 등 image -> icon)-->
+    <link rel="icon" type="image/x-icon" href="../resources/images/favicon.ico">
+    <!-- reset CSS : 브라우저별로 디폴트로 적용 된 CSS(여백, 폰트 등)에 차이가 있을 수 있으므로 활용한다. -->
+    <link href="https://unpkg.com/ress/dist/ress.min.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div id="news" class="big-bg">
+    <header class="page-header wrapper">
+        <h1>
+            <a href="1_full-screen.html">
+                <img class="logo" src="../resources/images/logo.png" alt="HOME">
+            </a>
+        </h1>
+        <nav>
+            <ul class="main-nav">
+                <li><a href="2_column.html">News</a></li>
+                <li><a href="#">Menu</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="wrapper">
+        <h2 class="page-title">News</h2>
+    </div>
+</div>
+<div class="news-content wrapper">
+    <!-- 메인 콘텐츠 부분 -->
+    <article>
+        <!-- 기사 헤더 -->
+        <header class="post-info">
+            <h2 class="post-title">기사 상단에 출력 될 제목입니다.</h2>
+            <p class="post-date">10/10 <span>2024</span></p>
+            <p class="post-cat">카테고리 : 기사 카테고리</p>
+        </header>
+        <!-- 기사 본문 -->
+        <img src="../resources/images/tower1.PNG" alt="타워">
+        <p>
+            <b>반응형 웹(Responsive Web) 디자인</b>이란
+            출력 영역의 너비에 따라 변화하게 디자인 된 웹 사이트를 의미한다.
+            데스크탑과 모바일의 너비는 매우 다른데, 반응형 웹 디자인을 사용하면
+            콘텐츠를 별도로 변경하지 않고 디바이스 크기에 따라 CSS만으로 외관을 변경할 수 있다.
+        </p>
+        <p>
+            <b>반응형 웹 디자인을 적용하는 방법</b>으로는
+            1. 2-column, 3-column 등 여러 개의 컬럼이 수평으로 정렬 되면 모바일의 작은 화면에서는
+            보기 힘드므로 컬럼을 수직으로 배치하여 출력하는 방법
+            2. 내비게이션의 메뉴의 경우 처음에는 메뉴를 감추고 메뉴 전용 아이콘을 눌렀을 때
+            모든 내비게이션 메뉴를 출력하는 방법 등이 주로 사용 된다.
+        </p>
+        <p>
+            <b>viewport란</b>
+            다양한 장치에서의 출력 영역을 의미한다.
+            별도로 지정하지 않았을 경우 모바일에서도 데스크탑과 같은 너비에 맞춰서
+            모든 것을 출력 해버리므로 글자가 너무 작아서 읽기 힘들어진다.
+            viewport가 지정 되더라도 레이아웃이 깨지기 때문에 추가적인 조정이 필요하다.
+        </p>
+        <p>
+            <b>미디어 쿼리(Media Query)란</b>
+            웹 페이지가 출력하는 화면 크기에 따라서 다른 CSS를 적용하게 해주는 기능으로
+            "화면의 너비가 600px 이하일 때 문자의 크기를 작게 만든다."와 같이
+            사용자 화면 환경에 맞게 스타일 변경이 가능하다.
+            @media (max-width:600px) { p { font-size: 10px; } } 와 같은 형태로 사용하면
+            0~600px 크기의 화면에서는 p 태그의 문자 크기를 10px로 나타낸다.
+        </p>
+    </article>
+    <!-- 사이드 바 -->
+    <aside>
+        <h3 class="sub-title">카테고리</h3>
+        <ul class="sub-menu">
+            <li><a href="#">서브 메뉴1</a></li>
+            <li><a href="#">서브 메뉴2</a></li>
+            <li><a href="#">서브 메뉴3</a></li>
+            <li><a href="#">서브 메뉴4</a></li>
+        </ul>
+        <h3 class="sub-title">Ohgiraffers 소개</h3>
+        <p>
+            Ohgiraffers Team. Ohgiraffers Team.
+            Ohgiraffers Team. Ohgiraffers Team.
+            Ohgiraffers Team. Ohgiraffers Team.
+            Ohgiraffers Team. Ohgiraffers Team.
+            Ohgiraffers Team. Ohgiraffers Team.
+        </p>
+    </aside>
+    <!-- 3-column 레이아웃으로 변경 -->
+    <!--<div class="ad">
+        <img src="../resources/images/banner.PNG">
+    </div>-->
+</div>
+<footer>
+    <div class="wrapper">
+        <p><small>&copy; 2025 Team Ohgiraffers</small></p>
+    </div>
+</footer>
+
+</body>
+</html>

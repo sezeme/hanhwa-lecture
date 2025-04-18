@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<style>
+    /* 애니메이션 정의 */
+    @keyframes trans1 {
+        from {
+            background: green;
+            border: 1px solid black;
+        }
+        to {
+            background: yellow;
+            border-radius: 50px;
+            transform: rotateZ(360deg);
+            border: 3px solid red;
+        }
+    }
+
+    @keyframes trans2 {
+        0% {
+            background-color: red;
+            border : 3px solid black;
+        }
+        30% {
+            transform: translate(50px, 50px);
+        }
+        50% {
+            background-color: hotpink;
+        }
+        100% {
+            transform: rotateZ(40deg);
+        }
+    }
+
+    .div1 {
+        margin: 100px;
+        width: 100px;
+        height: 100px;
+        background: gray;
+        /* 애니메이션 속성 적용 */
+        animation-name: trans1;
+        animation-duration: 5s;
+        animation-iteration-count: 3;
+        animation-direction: alternate;
+    }
+    .div2 {
+        margin: 100px;
+        width: 100px;
+        height: 100px;
+        /* 애니메이션 속성 적용 */
+        animation-name: trans2;
+        animation-duration: 2s;
+        animation-iteration-count: infinite;
+        animation-direction: alternate;
+    }
+    img {
+        margin: 100px;
+        width: 500px;
+        height: 500px;
+        /* 애니메이션 속성 적용 */
+        animation-name: trans2;
+        animation-duration: 2s;
+        animation-iteration-count: infinite;
+        animation-direction: alternate;
+    }
+</style>
+<title>애니메이션</title>
+</head>
+<body>
+<h1>애니메이션</h1>
+<div class="div1"></div>
+<div class="div2"></div>
+<img src="../resources/images/city1.PNG" alt="">
+</body>
+</html>
