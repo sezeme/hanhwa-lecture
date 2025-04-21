@@ -18,3 +18,11 @@ var obj = null;
 // obj가 Falsy(null, undefined) 값이면 좌항만 실행하여 val2 -> null
 // obj가 Truthy 값이면 val2 -> obj.value
 var val2 = obj && obj.value;
+console.log(val2);
+
+/*
+* JavaScript의 ||(OR), &&(AND) 연산자는 항상 불리언(true/false)을 반환하는 게 아니라,
+* “첫 번째 확정값”을 그대로 돌려주는 특징이 있습니다.
+* 만약 ||, &&의 결과를 반드시 true/false로 받고 싶다면,
+* 반환값을 불리언으로 변환해 주면 됩니다:
+* */
