@@ -8,7 +8,7 @@
 // 함수 표현식의 리터럴도 할당문이 실행되는 시점에 평가 되어 함수 객체가 된다.
 
 console.log(hello('홍길동'));
-console.log(hi('홍길동'));
+// console.log(hi('홍길동'));
 
 // 함수 선언문 : 함수 호이스팅
 function hello (name) {

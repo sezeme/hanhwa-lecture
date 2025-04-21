@@ -5,7 +5,7 @@ var obj = null;
 var val = obj?.value;
 console.log(val);
 
-// 단축 평가를 이용하면 빈 문자열과 같은 Falsy 값을 false로 취급하는
+// 단축 평가를 이용하면 빈 문자열과 같은 Falsy 값을 false로 취급하는 문제가 있었다.
 var str = '';
 var len = str && str.length; // 유효한 값이 있을 경우에만 담을게요. but falsy 값이 그대로 반환됨
 console.log(len);
