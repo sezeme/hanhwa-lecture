@@ -8,10 +8,10 @@ console.log(findWord(str));
 
 function findWord(str, word) {
     const arr = str.split(",");
-    if(word === undefined) {
+    if (word === undefined) {
         return "결과를 확인할 수 없습니다.";
     }
-    if(str.includes(word)) {
+    if (str.includes(word)) {
         return `${word}는 배열 index ${arr.indexOf(word)}번째에 있습니다.`;
     } else {
         return `${word}는 배열에 존재하지 않습니다.`;
@@ -20,8 +20,8 @@ function findWord(str, word) {
 
 // 1-2
 function filterRange(arr, a, b) {
-    for(let i = 0; i < arr.length ; i++){
-        if(arr[i] < a || arr[i] > b) {
+    for (let i = 0; i < arr.length; i++) {
+        if (arr[i] < a || arr[i] > b) {
             arr.splice(i, 1);
             i--;
         }
@@ -50,7 +50,7 @@ strings.sort().reverse();
 console.log(strings);
 
 // 1-4
-function Student(firstName, lastName, score){
+function Student(firstName, lastName, score) {
     this.firstName = firstName;
     this.lastName = lastName;
     this.score = score;
@@ -66,12 +66,18 @@ sortFromScore(studentList);
 console.log(studentList);
 console.log(makeFullName(studentList));
 
-function sortFromScore (arr) {
+function sortFromScore(arr) {
     arr.sort((a, b) => b.score - a.score);
 }
 
-function makeFullName(arr){
+function makeFullName(arr) {
     arr.forEach(elem => {
+        /*
+        * return arr.map(user => ({
+          name : user.lastName + user.firstName,
+          score : user.score })
+          );
+        * */
         elem.name = elem.lastName + elem.firstName;
         delete elem.firstName;
         delete elem.lastName;
