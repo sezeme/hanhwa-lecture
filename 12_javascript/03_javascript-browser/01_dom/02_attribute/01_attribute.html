@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>attribute</title>
+</head>
+<body>
+<h1>Attribute</h1>
+<p>
+    Element.prototype.attirbutes 프로퍼티로 모든 어트리뷰트 노드를 취득할 수 있다.
+    getter 만 존재하는 읽기 전용 접근라조 NamedNodeMap 을 반환한다.
+</p>
+<label for="username">유저명</label>
+<input type="text" id="username" value="user01">
+<script>
+    const attributes = document.querySelector("#username").attributes;
+    console.log(attributes);
+    console.log(attributes.type.value);
+    console.log(attributes.id.value);
+    console.log(attributes.value.value);
+</script>
+<p>
+    Element.prototype.getAttribute/setAttribute 메서드를 이용하면
+    attributes 프로퍼티를 토하지 않고 요소 노드에서 메서드를 통해 직접 HTML 어트리뷰트 값을
+    취득하거나 변경할 수 있다.
+</p>
+<script>
+    const $input = document.querySelector("#username");
+    const inputValue = $input.getAttribute("value");
+    console.log(inputValue);
+    $input.setAttribute("value", "user02");
+</script>
+<p>
+    Element.prototype.hasAttribute : 특정 HTML 속성의 존재 여부 확인
+    Element.prototype.removeAttribute : 특정 HTML 속성의 존재 삭제
+</p>
+<script>
+    console.log($input.hasAttribute('type'));
+    console.log($input.hasAttribute('name'));
+
+    if($input.hasAttribute('value'))
+        $input.removeAttribute('value');
+</script>
+</body>
+</html>
