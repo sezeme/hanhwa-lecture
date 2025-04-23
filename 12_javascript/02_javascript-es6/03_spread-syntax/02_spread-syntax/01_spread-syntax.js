@@ -14,3 +14,7 @@ console.log(`가장 큰 값 : ${ Math.max(0, ...arr1, 5, ...arr2) }`);
 // concat 메소드보다 간결하게 배열을 병합할 수 있다.
 const merged = [0, ...arr1, ...arr2];
 console.log(merged);
+
+// 문자열을 배열로 변환할 수 있다.
+const str = "JavaScript";
+console.log([...str]);
