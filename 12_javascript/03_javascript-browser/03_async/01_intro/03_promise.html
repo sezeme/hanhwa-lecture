@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    /* 콜백 지옥과 같은 코드가 형성되지 않도록 ES6부터 Promise 객체를 추가했다. */
+    function increase(number) {
+        /* resolve : 성공 시 호출할 함수, reject : 실패 시 호출할 함수 */
+        const promise = new Promise((resolve, reject) => {
+            setTimeout(() => {
+                const result = number + 10;
+                // 실패 시 에러 객체를 반환
+                if (result > 30) {
+                    const e = new Error('NumberTooBig');
+                    return reject(e);
+                }
+                // 성공 시에는 연산 된 결과를 반환
+                resolve(result);
+            }, 1000);
+        });
+
+        return promise;
+    }
+
+    // Promise 객체 자체를 반환 받아서는 프로퍼티를 꺼낼 수 없다
+    console.log(increase(0));
+
+    // Promise 객체 반환 시 then 메소드를 활용하여 해당 비동기 동작 이후의 수행 동작을 작성할 수 있다.
+    increase(0)
+        .then(number => {   // resolve 함수로 반환한 값이 then 메소드의 콜백의 매개변수로 전달 됨
+            console.log(number);
+            return increase(number);
+        })
+        .then(number => {   // 이전 then 메소드의 반환 값이 매개변수로 전달 됨
+            console.log(number);
+            return increase(number);
+        })
+        .then(number => {
+            console.log(number);
+            return increase(number);
+        })
+        .catch(e => { // reject 함수로 반환한 값이 catch 콜백의 매개변수로 전달 됨
+            console.log(e);
+        });
+
+</script>
+</body>
+</html>

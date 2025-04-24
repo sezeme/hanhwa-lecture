@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+  /* Promise 객체를 사용하는 방법으로 async, await 라는 키워드가 ES8 에서 추가되었다. */
+  function increase(number) {
+    /* resolve : 성공 시 호출할 함수, reject : 실패 시 호출할 함수 */
+    const promise = new Promise((resolve, reject) => {
+      setTimeout(() => {
+        const result = number + 10;
+        // 실패 시 에러 객체를 반환
+        if (result > 30) {
+          const e = new Error('NumberTooBig');
+          return reject(e);
+        }
+        // 성공 시에는 연산 된 결과를 반환
+        resolve(result);
+      }, 1000);
+    });
+
+    return promise;
+  }
+
+  // 함수 앞에 async 키워드를 작성한다.
+  async function run() {
+
+    // Promise 를 반환하는 함수 호출 시 앞에 await 키워드를 작성한다.
+    // await를 붙이면 promise 객체가 아닌 결과를 반환한다.
+    // await 키워드는 반드시 async 함수 영역 내에서만 작성해야 하며
+    // 비동기 작업이 마치 동기 작업인 것 처럼 코드를 작성할 수 있게 된다.
+    try {
+      let result = await increase(0);
+      console.log(result);
+      result = await increase(result);
+      console.log(result);
+      result = await increase(result);
+      console.log(result);
+      result = await increase(result);
+      console.log(result);
+    } catch(e) {
+      console.log(e);
+    }
+  }
+
+  run();
+</script>
+</body>
+</html>

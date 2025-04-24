@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>키보드 이벤트</h1>
+<input type="text" placeholder="아무 키나 입력하세요">
+<script>
+    const $input = document.querySelector('input[type=text]');
+    $input.addEventListener('keydown', e => console.log(`keydown key=${e.key}, code=${e.code}`))
+    $input.addEventListener('keyup', e => console.log(`keyup key=${e.key}, code=${e.code}`))
+</script>
+</body>
+</html>

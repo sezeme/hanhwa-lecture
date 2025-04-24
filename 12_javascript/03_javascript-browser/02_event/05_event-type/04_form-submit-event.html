@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>폼 제출 이벤트</h1>
+<form action="https://search.naver.com/search.naver" name="search">
+    <input type="text" name="query" placeholder="검색 키워드 입력">
+    <input type="submit">
+</form>
+<script>
+    const $form = document.forms.search;
+    $form.addEventListener('submit', e => {
+        const keyword = e.currentTarget
+            .querySelector('input[name=query]').value;
+        if(!keyword) {
+            alert(`${keyword} : 검색어를 입력하세요`);
+            e.preventDefault();
+        }
+    })
+</script>
+</body>
+</html>

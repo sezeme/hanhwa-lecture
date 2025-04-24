@@ -5,6 +5,22 @@
     <title>Title</title>
 </head>
 <body>
+<h1>마우스 이벤트</h1>
+<button>클릭해보세요</button>
+<script>
+  const $btn = document.querySelector('button');
+  // event.button -> 0 : 왼쪽, 1 : 가운데, 2 : 오른쪽
+  $btn.addEventListener('mousedown', e => console.log(`mousedown button=${e.button}`));
+  $btn.addEventListener('mouseup', e => console.log(`mouseup button=${e.button}`));
+  $btn.addEventListener('mouseover', e => console.log(`mouseover button=${e.button}`));
+  $btn.addEventListener('mouseout', e => console.log(`mouseout button=${e.button}`));
+  $btn.addEventListener('mousedown', e => console.log(`mousedown button=${e.button}`));
+  $btn.addEventListener('mousedown', e => console.log(`mousedown button=${e.button}`));
+  $btn.addEventListener('contextmenu', e => {
+    e.preventDefault();
+    console.log(`mousedown button=${e.button}`);
+  });
+</script>
 
 </body>
 </html>

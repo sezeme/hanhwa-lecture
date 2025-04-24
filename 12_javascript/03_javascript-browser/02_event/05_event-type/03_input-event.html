@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .lightgray {
+            background-color: lightgray;
+        }
+        .focused {
+            border-style: dashed;
+            border-color: red;
+        }
+    </style>
+</head>
+<body>
+<h1>사용자 입력 양식 이벤트</h1>
+
+<form name="memberjoin">
+
+    <label for="username">이름</label>
+    <input type="text" name="username" id="username" value="홍길동">
+
+    <br><br>
+
+    <label>성별</label>
+    <input type="radio" name="gender" id="male" value="m" checked><label for="male">남자</label>
+    <input type="radio" name="gender" id="female" value="f"><label for="female">여자</label>
+
+    <br><br>
+
+    <label>나이</label>
+    <select id="age" name="age">
+        <option value="10">10대 이하</option>
+        <option value="20">20대</option>
+        <option value="30">30대</option>
+        <option value="40">40대</option>
+        <option value="50">50대</option>
+        <option value="60">60대 이상</option>
+    </select>
+
+    <br><br>
+
+    <label>자기소개</label>
+    <textarea name="introduce" id="introduce" rows="5" cols="30"
+              style="resize:none;">저를 소개합니다!</textarea>
+    <span>0</span>/5000자
+
+    <br><br>
+
+    <input type="submit" value="제출">
+</form>
+<script>
+    // 폼 취득
+    console.log(document.forms);
+    console.log(document.forms[0]);
+    console.log(document.forms.memberjoin);
+    const $form = document.forms.memberjoin;
+
+    // 요소 취득
+    console.log($form.elements);
+    console.log($form.elements[0]);
+    console.log($form.elements.username);
+
+    // 각 입력 양식의 값 get, set 처리
+    // 1) type="text"
+    const $username = $form.username;
+    console.log(`$username.value : ${$username.value}`);
+    $username.value = '유관순';
+
+    // 2. type="radio"
+    const $gender = $form.gender;
+    console.log($gender);
+    console.log(`$gender[0].checked : ${$gender[0].checked}`);
+    console.log(`$gender[1].checked : ${$gender[1].checked}`);
+    $gender[1].checked = true;
+
+    // 3) select, option
+    const $age = $form.age;
+    console.log($age);
+    console.log($age.options);
+    $age.options[2].selected = true;
+    $age.selectedIndex = 3;
+    $age.value = '50';
+
+    // 4) introduce
+    const $introduce = $form.introduce;
+    console.log($introduce.value);
+    $introduce.value = '값 변경 테스트';
+
+</script>
+<h3>focus, blur 이벤트</h3>
+<p>
+    focus : 사용자가 폼 요소를 클릭하거나 tab 키를 눌러 요소로 이동 시 발생하는 이벤트,
+    blur : 사용자가 다른 곳을 클릭하거나 tab 키를 눌러 폼 필드로 이동했을 때
+    발생하는 이벤트
+</p>
+<script>
+    $username.addEventListener('focus',
+        e => e.target.classList.add('lightgray')
+    );
+    $username.addEventListener('blur',
+        e => e.target.classList.remove('lightgray')
+    );
+</script>
+<p>
+    focus 이벤트는 해당 입력 필드에만 동작하고 버블링 되지 않는다.
+    버블링이 필요한 경우 focusin, focusout 이벤트를 사용한다.
+</p>
+<script>
+    // 버블링이 일어나지 않아 변화를 관찰할 수 없음
+    $form.addEventListener('focus',
+        e => e.target.classList.add('focused')
+    );
+    $form.addEventListener('blur',
+        e => e.target.classList.remove('focused')
+    );
+    // 버블링이 일어나 클래스명이 부여 되는 모습을 관찰할 수 있음
+    $form.addEventListener('focusin',
+        e => e.target.classList.add('focused')
+    );
+    $form.addEventListener('focusout',
+        e => e.target.classList.remove('focused')
+    );
+</script>
+<p>
+    요소 변경이 종료되면 발생하는 이벤트이다.
+    select, checkbox, radio 의 경우 선택값이 변경 된 직후 이벤트가
+    발생하지만 텍스트 입력 요소의 경우 포커스를 잃을 때 이벤트가 발생한다.
+</p>
+<script>
+    $age.addEventListener('change', () => alert('age change!'));
+    $introduce.addEventListener('change', () => alert('introduce change!'));
+</script>
+<h3>input 이벤트</h3>
+<p>
+    키보드 이벤트와 달리 어떤 방법으로든 값을 변경할 때 발생한다.
+    마우스를 사용하여 글자를 붙여 넣거나 음성 인식 기능을 사용해서 글자를
+    입력할 때도 반응한다.
+</p>
+<script>
+    $introduce.addEventListener('input', e => {
+        const len = e.target.value.trim().length;
+        $form.querySelector('span').textContent = len;
+    })
+</script>
+
+
+
+
+
+
+
+
+
+</body>
+</html>
