@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>이벤트 전파 방지</h1>
+<p>
+  이벤트 객체의 stopPropagation 메서드는 이벤트 전파를 중지시킨다.
+</p>
+<ul id="drink">
+  <li>커피</li>
+  <li>콜라</li>
+  <li>우유</li>
+</ul>
+<script>
+  const $drink = document.querySelector('#drink');
+  // 클릭 된 li color 변경하는 코드
+  $drink.addEventListener('click', e => {
+    if(e.target.matches('li')) e.target.style.color = 'red';
+  });
+  // 다른 li 와는 다르게 첫 번째 li의 이벤트를 정의하는 코드
+  document.querySelector('li').addEventListener('click', e => {
+    e.stopPropagation();
+    e.target.style.color = 'blue';
+  });
+</script>
+</body>
+</html>
