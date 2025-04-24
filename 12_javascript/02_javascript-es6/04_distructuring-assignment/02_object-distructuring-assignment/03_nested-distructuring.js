@@ -12,11 +12,20 @@ const {
         width,
         height
     },
-    items : [item1, item2],
+    items : [ item1, item2 ],
     producer = '홍길동'
 } = product;
+
 console.log(width);
 console.log(height);
 console.log(item1);
 console.log(item2);
 console.log(producer);
+
+
+
+
+
+
+
+

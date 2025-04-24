@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>event object</title>
+</head>
+<body>
+<h1>이벤트 객체</h1>
+<h1 class="message">
+  아무 곳이나 클릭해보세요. 클릭한 좌표를 알려드릴게요.
+</h1>
+<script>
+  document.onclick = showCoords;
+
+  function showCoords(evt) {
+    console.log(evt);
+    const $msg = document.querySelector('.message');
+    $msg.textContent = `clientX : ${evt.clientX}, clientY : ${evt.clientY}`;
+  }
+</script>
+<div class="area" onclick="showDivCoords(event)"> <!--어트리뷰트 방식-->
+  이 영역 내부를 클릭해보세요. 클릭한 좌표를 알려드릴게요.
+</div>
+<script>
+  function showDivCoords(e) {
+    console.log(e); // 어트리뷰트 방식일 땐 인수로 event를 받아와야 한다.
+    const $area = document.querySelector('.area');
+    $area.textContent = `clientX : ${e.clientX}, clientY : ${e.clientY}\`;
+
+
+
+
+
+  }
+</script>
+</body>
+</html>

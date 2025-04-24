@@ -5,6 +5,56 @@
     <title>attribute-and-property</title>
 </head>
 <body>
+  <h1>HTML Attribute 와 DOM Property</h1>
+  <p>
+    HTML Attribute : HTML 요소의 초기 상태를 지정하며 변하지 않는다.
+    DOM Property : 사용자가 입력한 최신 상태를 관리한다.
+    사용자의 입력에 의한 상태 변화에 반응하여 언제나 최신 상태를 관리한다.
+  </p>
+  <label for="username">유저명</label>
+  <input type="text" id="username" value="user01">
+  <label for="nickname">닉네임</label>
+  <input type="text" id="nickname" value="JSMaster">
+  <script>
+    const $username = document.querySelector('#username');
+    // 사용자가 input 요소의 입력 필드에 값을 입력 할 때마다 동작하는 이벤트
+    $username.oninput = () => {
+      console.log('value 어트리뷰트', $username.getAttribute('value'));
+      console.log('value 프로퍼티', $username.value);
+    };
+
+    const $nickname = document.querySelector('#nickname');
+    $nickname.value = 'JSBeginner';
+    $nickname.id = 'nick';
+    console.log('value 어트리뷰트', $nickname.getAttribute('value'));
+    console.log('value 프로퍼티', $nickname.value);
+    // id 속성은 사용자 입력에 의한 상태 변화와 관계 없는 어트리뷰트로
+    // id 어트리뷰트와 id 프로퍼티는 항상 동일한 값으로 연동 된다.
+    console.log('id 어트리뷰트', $nickname.getAttribute('id'));
+    console.log('id 프로퍼티', $nickname.id);
+  </script>
+  <p>
+    getAttribute 메서드로 취득한 어트리뷰트 값은 언제나 문자열이다.
+    DOM 프로퍼티로 취득한 최신 상태 값은 문자열이 아닐 수도 있다.
+  </p>
+  <label for="check">확인</label>
+  <input type="checkbox" id="check" checked="checked">
+  <script>
+    const $checkbox = document.querySelector('input[type=checkbox]');
+    console.log($checkbox.getAttribute('checked')); // "checked"
+    console.log($checkbox.checked);                 // true
+  </script>
+
+
+
+
+
+
+
+
+
+
+
 
 </body>
 </html>

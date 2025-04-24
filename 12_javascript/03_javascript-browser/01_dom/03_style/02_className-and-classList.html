@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>className and classList</title>
+    <style>
+      .area {
+        width: 100px;
+        height: 100px;
+        border: 1px solid black;
+      }
+      .circle { border-radius: 50%; }
+      .lightgray { background: lightgray; }
+      .yellow { background: yellow; }
+    </style>
+</head>
+<body>
+  <h1>className and classList</h1>
+  <p>
+    class 어트리뷰트에 대응하는 DOM 프로퍼티는 class가 아니라
+    className과 classList이다.
+  </p>
+  <div class="area"></div>
+  <script>
+    const $area = document.querySelector(".area");
+    console.log($area.className);
+
+    // 클래스명을 덮어쓰게 되어 area 클래스가 제거 된다.
+    // $area.className = 'circle';
+
+    console.log($area.classList);
+    $area.classList.add('circle');
+    $area.classList.add('lightgray');
+
+    console.log($area.classList.item(0));
+    console.log($area.classList.item(1));
+    console.log($area.classList.item(2));
+
+    console.log($area.classList.contains('circle'));
+    console.log($area.classList.contains('yellow'));
+
+    $area.classList.replace('lightgray', 'yellow');
+
+    $area.classList.toggle('yellow');
+    $area.classList.toggle('yellow');
+
+    $area.classList.remove('yellow');
+
+  </script>
+</body>
+</html>

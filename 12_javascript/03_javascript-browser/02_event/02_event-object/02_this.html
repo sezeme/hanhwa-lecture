@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>this</title>
+</head>
+<body>
+<h1>이벤트 핸들러 내부의 this</h1>
+<p>
+  어트리뷰트 방식의 경우 이벤트 핸들러에 의해 일반 함수로 호출되고
+  일반 함수 내부의 this는 전역 객체 window를 가리킨다.
+  이벤트 핸들러 호출 시 인수로 전달한 this는 이벤트를 바인딩 한 DOM 요소를 가리킨다.
+</p>
+<button onclick="handleClick1()">클릭</button>
+<button onclick="handleClick2(this)">클릭</button>
+<script>
+  function handleClick1() { console.log(this); }
+  function handleClick2(param) { console.log(param) }
+</script>
+</body>
+</html>

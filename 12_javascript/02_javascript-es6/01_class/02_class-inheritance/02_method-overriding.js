@@ -27,8 +27,3 @@ class Tiger extends Animal {
 
 let tiger = new Tiger('백두산 호랭이', 90);
 tiger.move('슬픈 눈망울의 사슴');
-
-
-
-
-

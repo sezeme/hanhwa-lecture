@@ -43,11 +43,11 @@ teacher.introduce();
 Teacher();  // 생성자 함수는 new와 함께 호출하지 않아도 에러가 발생하지 않음
 
 // 2. 클래스에 정의 된 메서드는 열거 불가
-for(method in student) {    // 클래스로 만듬
+for(method in student) {
     console.log(`반복문 student : ${method}`);
 }
 
-for(method in teacher) {    // 생성자 함수로 만듬
+for(method in teacher) {
     console.log(`반복문 teacher : ${method}`);
 }
 

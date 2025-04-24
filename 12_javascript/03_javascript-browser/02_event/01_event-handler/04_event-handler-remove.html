@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>event handler remove</title>
+</head>
+<body>
+<h1>event handler remove</h1>
+<button id="btn">클릭</button>
+<script>
+    const $btn = document.querySelector('#btn');
+    const handleClick = function() { alert('클릭했네?') };
+    $btn.addEventListener('click', handleClick);
+    $btn2.removeEventListener('click', handleClick); // ???????
+
+
+</script>
+<button id="btn2">더블 클릭해보세요</button>
+<script>
+    const $btn2 = document.querySelector('#btn2');
+    const handleDblClick = () => alert('더블클릭했대요~');
+    $btn2.ondblclick = handleDblClick;      // 이벤트 핸들러 등록
+    $btn2.removeEventListener('dblclick', handleDblClick);  // 이벤트 핸들러 제거 X
+    $btn2.ondblclick = null;
+</script>
+</body>
+</html>
