@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+      .highlight {
+        font-weight: bolder;
+        text-decoration: underline;
+      }
+    </style>
+</head>
+<body>
+  <h1>이벤트 위임</h1>
+  <p>
+    비슷한 방식으로 여러 요소를 다뤄야 할 때 각 요소마다 핸들러를 할당하지 않고,
+    공통의 조상에 이벤트 핸들러를 하나만 할당해 여러 요소를 한 번에 다루는 것을 이벤트 위임이라 한다.
+  </p>
+  <ul id="drink">
+    <li>커피</li>
+    <li>콜라</li>
+    <li>우유</li>
+  </ul>
+  <script>
+    const $drink = document.querySelector('#drink');
+    $drink.addEventListener('click', e => {
+      if(e.target.matches('li'))
+        highlight(e.target);
+    });
+
+    function highlight(li) { li.classList.toggle('highlight'); }
+  </script>
+
+</body>
+</html>

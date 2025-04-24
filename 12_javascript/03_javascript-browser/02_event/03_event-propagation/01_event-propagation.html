@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+      ul { background: skyblue; }
+      li { background: lightcoral; }
+    </style>
+</head>
+<body>
+  <h1>이벤트 전파</h1>
+  <ul id="drink">
+    <li>커피</li>
+    <li>콜라</li>
+    <li>우유</li>
+  </ul>
+  <script>
+    const $drink = document.querySelector('#drink');
+    $drink.addEventListener('click', e => {
+      // ul 영역 클릭 시
+      // eventPhase : 2 (타깃 단계), target : ul, currentTarget : ul
+      // li 영역 클릭 시
+      // eventPhase : 3 (버블링 단계 li -> ul), target : li, currentTarget : ul
+      console.log(e.eventPhase);    // 이벤트 전파 단계
+      console.log(e.target);        // 실제 클릭 된 대상
+      console.log(e.currentTarget); // 이벤트가 바인딩 된 대상
+    });
+  </script>
+  <p>
+    어트리뷰트/프로퍼티 방식으로 등록한 이벤트 핸들러는 타깃, 버블링 단계의 이벤트만 캐치하지만
+    addEventListener 메서드 방식으로 등록한 이벤트 핸들러는 3번째 인수로 true를 전달하면
+    캡처링 단계의 이벤트도 캐치할 수 있다.
+  </p>
+  <ul id="food">
+    <li>김치찌개</li>
+    <li>된장찌개</li>
+    <li>고등어구이</li>
+  </ul>
+  <script>
+    const $food = document.querySelector('#food');
+    $food.addEventListener('click', e => {
+      console.log('캡처링 단계');
+      console.log(e.eventPhase);    // 이벤트 전파 단계
+      console.log(e.target);        // 실제 클릭 된 대상
+      console.log(e.currentTarget); // 이벤트가 바인딩 된 대상
+    }, true);
+    $food.addEventListener('click', e => {
+      console.log('타깃 or 버블링 단계');
+      console.log(e.eventPhase);    // 이벤트 전파 단계
+      console.log(e.target);        // 실제 클릭 된 대상
+      console.log(e.currentTarget); // 이벤트가 바인딩 된 대상
+    });
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
