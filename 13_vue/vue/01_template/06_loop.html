@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+<!-- v-for : 배열을 기준으로 항목 목록을 랜더링 하는 지시문 -->
+<div id="step01">
+  <ul>
+    <li v-for="item in items">{{ item }}</li>
+  </ul>
+  <ul>
+    <li v-for="info in profile">{{ info }}</li>
+  </ul>
+  <ul>
+    <li v-for="(value, key, index) in profile">
+      {{ value }} : {{ key }} : {{ index }}
+    </li>
+  </ul>
+  <!-- data 없이 범위만 있는 loop 렌더링 -->
+  <ul>
+    <li v-for="n in 10">{{ n }}</li>
+  </ul>
+  <ul>
+    <!--<li v-for="item in testItems" v-if="item.state">{{ item.name }}</li>-->
+    <template v-for="item in testItems">
+      <li v-if="item.state" :key="item.id">{{ item.name }}</li>
+    </template>
+    <!--
+      :key
+      Vue가 랜더링 된 요소 목록을 업데이트 할 때 v-for는 반복 된 DOM 요소 전체를 확인하게 된다.
+      이 때 Vue가 각 노드의 id를 추적할 수 있도록 힌트를 주고 기존 요소를 재사용하여 순서를 변경함에
+      용이하게 하려면 key 정보를 제공해 주어야 한다.
+    -->
+  </ul>
+</div>
+<script>
+  const { createApp, ref, reactive } = Vue;
+  createApp({
+    setup() {
+      const items = ref(['apple', 'banana', 'melon', 'orange']);
+      const profile = reactive({
+        name : '홍길동', age : 20, address : '서울시 동작구'
+      });
+      const testItems = ref([
+        { id: 1, name : 'apple', state : true },
+        { id: 2, name : 'banana', state : false },
+        { id: 3, name : 'melon', state : true },
+        { id: 4, name : 'orange', state : false },
+      ]);
+      return {
+        items, profile, testItems
+      }
+    }
+  }).mount("#step01");
+</script>
+
+</body>
+</html>

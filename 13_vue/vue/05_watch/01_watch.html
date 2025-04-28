@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+<!--
+  watch : 데이터의 변경을 감지하고 그에 따라 추가 동작을 수행할 수 있다.
+  반응형 데이터가 변한 시점에 부수 효과(API 호출, 라우팅 등)를 실행할 때 사용한다.
+ -->
+<div id="step01">
+  <p>현재 값 : {{ currentValue }}</p>
+  <p>이전 값 : {{ previousValue }}</p>
+  <p>입력 : <input type="text" v-model="currentValue"/></p>
+</div>
+<div id="step02">
+  <p>{{ sum }}</p>
+  <button @click="x++">x++</button>
+  <button @click="y++">y++</button>
+  <button @click="z++">z++</button>
+</div>
+<script>
+  const { createApp, ref, watch } = Vue;
+  createApp({
+    setup() {
+      const currentValue = ref('');
+      const previousValue = ref('');
+
+      /* watch(propertyName, callback(newValue, oldValue) => {})
+      * 1. propertyName: 변경을 감지할 속성
+      * 2. callback: 변경 감지 시 수행할 동작
+      * */
+      watch(currentValue, (newVal, oldVal) => {
+        console.log(`newVal : ${newVal}`);
+        console.log(`oldVal : ${oldVal}`);
+        previousValue.value = oldVal;
+      });
+
+      return {
+        currentValue, previousValue
+      }
+    }
+  }).mount("#step01");
+
+  createApp({
+    setup() {
+      const x = ref(0);
+      const y = ref(0);
+      const z = ref(0);
+      const sum = ref(0);
+
+      /* 감시 대상이 여러 개일 경우 배열로 전달한다. */
+      /*watch([x, y, z], (oldVal, newVal) => {
+        sum.value = x.value + y.value + z.value;
+      });*/
+
+      /* 2개의 함수를 인수로 넘기고 첫 번째 함수 내에서 다루는 대상만 감시하여
+      * 반환 결과를 두 번째 함수로 전달한다. */
+      watch(() => {
+        return x.value + y.value;
+      }, (result) => {
+        sum.value = result;
+      });
+
+      return {
+        x, y, z, sum
+      }
+    }
+  }).mount("#step02");
+</script>
+
+</body>
+</html>

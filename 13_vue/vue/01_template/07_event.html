@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+    <!-- 이벤트는 v-on 지시자를 통해 연결한다. @ 기호로 간략하게 작성할 수도 있다. -->
+  <div id="step01"></div>
+  <div id="step02">
+      <div>count is {{ num }}</div>
+      <button @click="notification('message')">알림</button>
+  </div>
+  <div id="step03">
+      <!-- keyup 이벤트에 추가할 수 있는 키
+       : enter, tab, delete, esc, ... -->
+      <button @keyup.enter="warn('첫 번째', $event)">
+          첫 번째 이벤트
+      </button>
+  </div>
+    <div id="step04">
+        <!-- prevent : 기본 브라우저 이벤트 막기 -->
+        <a
+                href="https://www.google.com"
+                @click.prevent="doSomething"
+        >
+            구글 안가고 싶은 a 태그
+        </a>
+        <!-- stop : 이벤트 전파 방지 (버블링 방지) -->
+        <div @click="bubbling">
+            <button @click.stop="stopTest">
+                버블링 테스트
+            </button>
+        </div>
+        <!-- self : 하위 요소 이벤트 억제 -->
+        <div>
+            <button @click.self="selfTest">
+                self <span>other</span>
+            </button>
+        </div>
+        <!-- once : 이벤트가 한 번만 동작 -->
+        <div>
+            <button @click.once="onceTest">
+                한번만 동작하는 버튼
+            </button>
+        </div>
+    </div>
+  <script>
+    const { createApp, ref } = Vue;
+    createApp({
+      setup() {
+        const count = ref(0);
+        return { count }
+      },
+        template : `
+            <div>count is {{ count }}</div>
+            <button @click="count++">count++</button>
+        `
+    }).mount("#step01");
+
+    createApp({
+        setup() {
+            const num = ref(0);
+            const notification = (msg) => {
+                num.value++;
+                alert(`${msg} : ${num.value}개`);
+            };
+            return { num, notification }
+        }
+    }).mount("#step02");
+
+    createApp({
+        setup() {
+            const warn = (msg, event) => {
+                console.log(`msg : ${msg}`);
+                console.log('event : ', event);
+            };
+            return { warn }
+        }
+    }).mount("#step03");
+
+    createApp({
+        setup() {
+            const doSomething =
+                () => console.log('a 태그 클릭 됨');
+            const bubbling =
+                () => console.log('버블버블');
+            const stopTest =
+                () => console.log('이벤트전파방지!');
+            const selfTest =
+                () => console.log('오직나만!');
+            const onceTest =
+                () => console.log('기회는한번!');
+            return {
+                doSomething,
+                bubbling,
+                stopTest,
+                selfTest,
+                onceTest
+            }
+        }
+    }).mount("#step04");
+  </script>
+
+</body>
+</html>

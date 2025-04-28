@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+  <div id="step01">
+      <!-- 속성 바인딩 : v-bind, 생략 가능 -->
+      <div v-bind:id="dynamicId">{{ dynamicValue }}</div>
+      <div :id="skipId">{{ skipValue }}</div>
+  </div>
+  <div id="step02">
+      <h5>비활성화</h5>
+      <input :value="isTrue" :disabled="isTrue">
+      <!-- @ : v-on 지시자와 동일한 의미로 이벤트 설정 -->
+      <button @click="activation">{{ isTrue }}</button>
+  </div>
+  <script>
+    const { createApp, ref, reactive } = Vue;
+    createApp({
+      setup() {
+          /* ref : 반응성 변수 선언시 사용하는 함수
+          * 반응성 변수 : 데이터 값 변경 시 자동으로 템플릿 업데이트 */
+        const dynamicId = ref('vue');
+        const dynamicValue = ref('test');
+        const skipId = ref('skipId');
+        const skipValue = ref('test2');
+        return {
+            dynamicId, dynamicValue, skipId, skipValue
+        }
+      }
+    }).mount("#step01");
+
+    createApp({
+        setup() {
+
+            /* ref vs reactive
+            * 1. ref는 모든 자료형에 사용 가능하며 reactive는 객체 자료형에만 사용 가능
+            * 2. ref는 setup 함수 내에서 접근할 때 .value를 사용하며 reactive는 사용 하지 않음
+            * 단, template 영역에서는 둘 다 .value를 사용하지 않음
+            * */
+
+            const isTrue = ref(false);
+            const reactiveObj = reactive({ test: 'reactiveValue' });
+            const activation = () => {
+                /* ref 함수로 선언 된 반응성 변수의 값에 접근하기 위해서는 .value 속성으로 접근한다. */
+                console.log(isTrue);
+                console.log(isTrue.value);
+                /* reactive 함수로 선언 된 반응성 변수의 값에 접근 할 때는 .value 속성을 사용하지 않는다. */
+                console.log(reactiveObj.test);
+                isTrue.value = !isTrue.value;
+            };
+            return {
+                isTrue, activation
+            }
+        }
+    }).mount("#step02");
+  </script>
+
+</body>
+</html>

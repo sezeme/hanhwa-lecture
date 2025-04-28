@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+<!--
+    v-show : 조건에 따라 요소를 화면에서 보여주거나 숨기는데 사용 된다.
+    css 의 display 속성을 컨트롤한다.
+ -->
+<div id="step01">
+  <button @click="setState">문자열 토글</button>
+  <h1 v-show="state">Hello</h1>
+</div>
+<!-- v-if : 조건을 만족할 경우 요소를 화면에 보여준다. -->
+<div id="step02">
+  <div v-if="isTrue">
+    참인 경우 보여지는 영역
+  </div>
+  <div v-if="!isTrue">
+    거짓인 경우 보여지는 영역
+  </div>
+  <div v-if="truthy">
+    {{ truthy }}
+  </div>
+  <div v-if="falsy">
+    {{ falsy }}
+  </div>
+</div>
+<div id="step03">
+  <h1 v-if="str === 'awesome'">
+    Vue is Awesome!
+  </h1>
+  <h1 v-else-if="str === 'good'">
+    Vue is soso!
+  </h1>
+  <h1 v-else>
+    Oh no!
+  </h1>
+  <button @click="setToggle">toggle</button>
+</div>
+<!-- template 태그를 사용하면 실제 DOM 요소로
+해석되지 않고 범위를 지정할 때 활용할 수 있다. -->
+<div id="step04">
+  <div v-if="isTrue">
+    <h1>div</h1>
+  </div>
+  <template v-if="isTrue">
+    <h1>template</h1>
+  </template>
+</div>
+<script>
+  const { createApp, ref } = Vue;
+  createApp({
+    setup() {
+      const state = ref(false);
+      const setState = () => {
+        state.value = !state.value;
+      };
+      return {
+        state, setState
+      }
+    }
+  }).mount("#step01");
+
+  createApp({
+    setup() {
+      const isTrue = ref(false);
+      const truthy = ref('truthy');
+      const falsy = ref('');
+      return {
+        isTrue, truthy, falsy
+      }
+    }
+  }).mount("#step02");
+
+  createApp({
+    setup() {
+      const str = ref('awesome');
+      const options = ['awesome', 'good', 'not good'];
+      let count = 1;
+      const setToggle = () => {
+        const optionIndex = count % options.length;
+        str.value = options[optionIndex];
+        count++;
+      };
+      return {
+        str, setToggle
+      }
+    }
+  }).mount("#step03");
+
+  createApp({
+    setup() {
+      const isTrue = ref(true);
+      return {
+        isTrue
+      }
+    }
+  }).mount("#step04");
+</script>
+
+</body>
+</html>

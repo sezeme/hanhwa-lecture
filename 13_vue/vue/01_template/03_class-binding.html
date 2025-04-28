@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+        .static {
+            width : 150px;
+            height: 100px;
+        }
+        .active:hover {
+            background-color : red;
+        }
+    </style>
+</head>
+<body>
+    <!-- class 어트리뷰트는 프로퍼티 값이 true인 프로퍼티명이 클래스명으로 추가 된다. -->
+  <div id="step01">
+      <div :class="{active : isActive, static : isSize}">{{ isActive }}</div>
+      <div :class="classObj">{{ classObj }}</div>
+  </div>
+  <script>
+    const { createApp, ref, reactive } = Vue;
+    createApp({
+      setup() {
+        const isActive = ref(true);
+        const isSize = ref(true);
+        const classObj = reactive({ active : true, static : true });
+        return {
+            isActive, isSize, classObj
+        }
+      }
+    }).mount("#step01");
+  </script>
+
+</body>
+</html>

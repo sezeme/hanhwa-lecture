@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+  <div id="step01">
+      <!-- 다중 속성 바인딩 -->
+      <div v-bind="multiAttr">{{ multiAttr }}</div>
+      <button @click="func">ref에 담긴 객체 접근</button>
+  </div>
+  <script>
+    const { createApp, ref } = Vue;
+    createApp({
+      setup() {
+        const multiAttr = ref({
+            id : 'multiId',
+            class : 'multiClass',
+            value : 'multiValue'
+        });
+
+        const func = () => {
+            console.log(multiAttr.value.id);
+            console.log(multiAttr.value.class);
+            console.log(multiAttr.value.value);
+        };
+
+        return {
+            multiAttr, func
+        }
+      }
+    }).mount("#step01");
+  </script>
+
+</body>
+</html>

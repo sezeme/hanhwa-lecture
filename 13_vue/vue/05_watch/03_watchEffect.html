@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+<!--
+  watchEffect
+  첫 인수로 감시 대상이 필요하지 않으며 동작할 콜백 함수만 전달하면 콜백 함수 내부의 반응형 변수를 감시한다.
+  (단, oldValue 참조는 불가능하다.)
+  immediate : true 설정을 부여한 것과 동일하게 최초 한 번 실행 된다.
+-->
+<div id="step01">
+  <p>{{ num }}</p>
+  <button @click="num++">num++</button>
+</div>
+<script>
+  const { createApp, ref, watchEffect } = Vue;
+  createApp({
+    setup() {
+      const num = ref(0);
+      watchEffect(() => {
+        console.log(`num : ${num.value}`);
+      });
+
+      return { num }
+    }
+  }).mount("#step01");
+</script>
+
+</body>
+</html>

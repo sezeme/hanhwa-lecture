@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+<div id="step01">
+  <h1>{{ message }}</h1>
+  <button @click="updateMessage">updateMessage</button>
+</div>
+<script>
+  const { createApp, ref, nextTick } = Vue;
+  createApp({
+    setup() {
+      const message = ref('Hello, Vue!');
+      const updateMessage = async () => {
+
+        console.log(`message 값 변경 전 : `, document.querySelector('h1').innerText);
+
+        // 반응형 상태를 변경하면 Vue 내부적으로 DOM 업데이트가 "예약" 됨
+        // 그러나 실제 DOM은 아직 변경 되지 않음
+        message.value = '안녕, 뷰!';
+
+        // nextTick
+        // Vue의 DOM 업데이트는 최적화를 위해 비동기적으로 일어난다.
+        // DOM 갱신을 기다렸다가 작업을 실행하고 싶을 때 활용한다.
+        await nextTick();
+
+        console.log(`message 값 변경 후 : `, document.querySelector('h1').innerText);
+      };
+      return {
+        message, updateMessage
+      }
+    }
+  }).mount("#step01");
+</script>
+
+</body>
+</html>

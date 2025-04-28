@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+<div id="step01">
+  <p>상품 가격 : <input type="number" v-model="price"></p>
+  <p>수량 : <input type="number" v-model="quantity"></p>
+  <p>합계 : {{ total }}</p>
+  <p>메세지 : <input type="text" v-model="message"></p>
+</div>
+<script>
+  const { createApp, ref, computed } = Vue;
+  createApp({
+    setup() {
+      const price = ref(1000);
+      const quantity = ref(1);
+      const message = ref('');
+
+      /* computed : 여러 반응형 값을 조합해 파생 데이터를 만드는데 사용한다.
+      * 종속 된 값 중 하나라도 바뀌면 자동으로 재계산 되며, 종속 되지 않은 값이 바뀌면 동작하지 않는다.
+      * 내부적으로 캐싱 되어 종속 값이 바뀌지 않으면 재사용 된다. */
+      const total = computed(() => {
+        console.log('computed callback 동작함!');
+        return price.value * quantity.value
+      });
+      return {
+        price, quantity, total, message
+      }
+    }
+  }).mount("#step01");
+</script>
+
+</body>
+</html>

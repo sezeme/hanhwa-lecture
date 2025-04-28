@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+<!--
+  v-model : 양방향 데이터 바인딩을 위한 지시자
+  HTML 입력 요소의 값과 Vue의 반응형 상태(ref, reactive)를 자동으로 연결한다
+ -->
+<div id="step01">
+  <label>이름</label>
+  <input type="text" v-model="name"><br>
+  <label>주소</label>
+  <!--
+    .lazy : 입력 값이 바로 반영되지 않고 blur 되었을 때 반영 됨
+    입력 중간 값을 상태로 유지하고 싶지 않을 때 사용
+  -->
+  <input type="text" v-model.lazy="address"><br>
+  <label>나이</label>
+  <!--
+    .number : 입력 값 숫자로 자동 형변환
+    숫자로 시작하지 않거나 변환 불가할 경우 값은 반영 되지 않음
+  -->
+  <input type="text" v-model.number="age"><br>
+  <label>자기소개</label>
+  <!--
+    .trim : 입력 값의 앞뒤 공백 자동 제거
+  -->
+  <input type="text" v-model.trim="introduce"><br>
+  <h5>{{ name }}</h5>
+  <h5>{{ address }}</h5>
+  <h5>{{ age }}</h5>
+  <h5>{{ introduce }}</h5>
+
+  <hr>
+
+  <!-- 단일 선택 -->
+  <select v-model="selected" @change="check">
+    <option>apple</option>
+    <option>melon</option>
+    <option>grape</option>
+  </select>
+  <!-- 다중 선택 -->
+  <select v-model="multi" multiple>
+    <option>apple</option>
+    <option>melon</option>
+    <option>grape</option>
+  </select>
+  <h5>{{ selected }}</h5>
+  <h5>{{ multi }}</h5>
+
+  <hr>
+
+  <input id="apple" type="checkbox" value="apple" v-model="fruits"/>
+  <label for="apple">apple</label>
+  <input id="melon" type="checkbox" value="melon" v-model="fruits"/>
+  <label for="melon">melon</label>
+  <input id="grape" type="checkbox" value="grape" v-model="fruits"/>
+  <label for="grape">grape</label>
+</div>
+<script>
+  const { createApp, ref } = Vue;
+  createApp({
+    setup() {
+      const name = ref('');
+      const address = ref('');
+      const age = ref(0);
+      const introduce = ref('');
+      const selected = ref('apple');
+      const check = () => console.log(selected.value);
+      const multi = ref([]);
+      const fruits = ref([]);
+      return {
+        name, address, age, introduce,
+        selected, check, multi,
+        fruits
+      }
+    }
+  }).mount("#step01");
+</script>
+
+</body>
+</html>

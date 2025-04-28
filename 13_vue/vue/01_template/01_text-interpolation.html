@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+<!-- 텍스트 보간법 : 텍스트 사이에 동적 값을 추정하여 삽입하는 구문 -->
+  <div id="step01">
+    <span>msg : {{ msg }}</span>
+    <div v-text="msg"></div>
+    <div v-text="'msg = ' + msg"></div>
+    <div>Using text interpolation : {{ rawHtml }}</div>
+    <div>Using v-html directive : <span v-html="rawHtml"></span></div>
+  </div>
+  <script>
+    const { createApp } = Vue;
+    createApp({
+      setup() {
+
+        return {
+          msg : 'hello',
+          rawHtml : '<span style="color:red;">hello</span>'
+        }
+      }
+    }).mount("#step01");
+  </script>
+
+</body>
+</html>
