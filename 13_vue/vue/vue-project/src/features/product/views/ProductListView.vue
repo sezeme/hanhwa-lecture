@@ -4,21 +4,25 @@ import {onMounted, reactive, ref} from "vue";
 import {getProducts} from "@/features/product/api.js";
 import SkeletonList from "@/components/common/SkeletonList.vue";
 import ProductList from "@/features/product/componenets/ProductList.vue";
+import PagingBar from "@/components/common/PagingBar.vue";
 
 const products = ref([]);
 const pagination = reactive({
-  currentPate: 1,
+  currentPage: 1,
   totalPages: 1,
   totalItems: 0
 });
 const isLoading = ref(true);
 
-const fetchProducts = async () => {
+const fetchProducts = async (page = 1) => {
   isLoading.value = true;
   try {
     // api 호출 (axios lib)
-    const {data: wrapper} = await getProducts({});
+    const {data: wrapper} = await getProducts({
+      page : page
+    });
     const respData = wrapper.data;
+    console.log(respData);
     products.value = respData.products || [];
     // Object.assign(target, ...sources) : source의 속성을 모두 꺼내 target에 덮어쓰기
     Object.assign(pagination, respData.pagination ?? {});
@@ -37,6 +41,10 @@ onMounted(() => fetchProducts());
   <SkeletonList v-if="isLoading"/>
   <!-- ProductList 가 조회 되었을 때 보여줄 컴포넌트 -->
   <ProductList v-else :products="products"/>
+  <PagingBar
+      v-bind="pagination"
+      @page-changed="fetchProducts"
+  />
 </template>
 
 <style scoped>
