@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <title>Vue - v-model Practice</title>
+    <style>
+        main {
+            display: flex;
+            gap: 2rem;
+            padding: 1rem;
+        }
+        form, article {
+            border: 1px solid #ccc;
+            padding: 1rem;
+            width: 300px;
+        }
+        input, textarea {
+            width: 100%;
+            margin: 0.5rem 0;
+        }
+    </style>
+</head>
+<body>
+<main id="app">
+    <form>
+        <label>이름</label>
+        <input type="text" v-model="name">
+
+        <label>소개</label>
+        <textarea v-model="intro"></textarea>
+
+        <label>이미지 주소</label>
+        <input type="text" v-model="img">
+    </form>
+
+    <article>
+        <h3>{{ name }}</h3>
+        <p>{{ intro }}</p>
+        <img :src="img" :alt="name" style="width:100%; height:200px; object-fit:cover">
+    </article>
+</main>
+
+<script>
+    const { createApp, ref } = Vue;
+    createApp({
+        setup() {
+            const name = ref('');
+            const intro = ref('');
+            const img = ref('');
+            return { name, intro, img }
+        }
+    }).mount('#app')
+</script>
+</body>
+</html>

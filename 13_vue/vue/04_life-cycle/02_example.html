@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <title>인생 와인 쇼핑</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <style>
+    :root {
+      --primary: #4a90e2;
+      --primary-dark: #357ab8;
+      --secondary: #f5a623;
+      --light: #fff;
+      --shadow: rgba(0,0,0,0.1);
+      --radius: 0.5rem;
+      --gap: 1rem;
+    }
+    body {
+      font-family: sans-serif;
+      background: #fafafa;
+      margin: 0;
+      padding: 2rem;
+      color: #333;
+    }
+
+    .rootContainer {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--gap);
+    }
+
+    h1.neon {
+      color: var(--light);
+      text-shadow:
+              0 0 10px var(--primary), 0 0 20px var(--primary),
+              0 0 30px var(--primary), 0 0 40px var(--primary);
+      animation: neonAnimation 1s ease-in-out infinite alternate;
+    }
+    @keyframes neonAnimation {
+      from { text-shadow: 0 0 10px var(--primary), 0 0 20px var(--primary); }
+      to   { text-shadow: 0 0 5px var(--primary), 0 0 10px var(--primary); }
+    }
+
+    .btn {
+      padding: 0.6rem 1.2rem;
+      border: none;
+      border-radius: var(--radius);
+      cursor: pointer;
+      font-size: 1rem;
+      box-shadow: 0 2px 5px var(--shadow);
+      transition: background 0.2s, transform 0.1s;
+    }
+    .btn:active { transform: scale(0.97); }
+
+    .btn-primary {
+      background: var(--primary);
+      color: var(--light);
+    }
+    .btn-primary:hover {
+      background: var(--primary-dark);
+    }
+
+    .btn-secondary {
+      background: var(--secondary);
+      color: var(--light);
+    }
+    .btn-secondary:hover {
+      filter: brightness(0.9);
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+
+    .appContainer {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--gap);
+      width: 80%;
+      justify-content: center;
+    }
+
+    .wine-card {
+      background: #fff;
+      border-radius: var(--radius);
+      box-shadow: 0 2px 8px var(--shadow);
+      flex: 1 1 calc(30% - var(--gap));
+      max-width: 300px;
+      min-width: 200px;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      transition: transform 0.2s;
+    }
+    .wine-card:hover {
+      transform: translateY(-4px);
+    }
+    .wine-card img {
+      width: 70px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: var(--radius);
+    }
+  </style>
+</head>
+<body>
+<div id="app" class="rootContainer">
+  <!-- 로딩 중일 땐 placeholder -->
+  <div v-if="isLoading">로딩을 준비합니다…</div>
+
+  <!-- 실제 콘텐츠 -->
+  <template v-else>
+    <h1 class="neon">인생 와인</h1>
+    <!-- 페이지 네비게이션 -->
+    <div class="btn-group">
+      <button
+              class="btn btn-primary"
+              :disabled="pageIndex === 0"
+              @click="goBack"
+      >
+        Back
+      </button>
+      <span>Page {{ pageIndex + 1 }} / {{ totalPages }}</span>
+      <button
+              class="btn btn-primary"
+              :disabled="pageIndex + 1 >= totalPages"
+              @click="goNext"
+      >
+        Next
+      </button>
+    </div>
+
+    <!-- 좋아요 한 와인 목록 & 쇼핑 완료 토글 버튼 -->
+    <div style="margin-bottom:1rem;">
+      <p>내가 좋아하는 와인 : {{ likes.join(", ") }}</p>
+      <button class="btn btn-secondary" @click="toggleViewing">
+        {{ viewing ? '쇼핑 하기' : '쇼핑 완료' }}
+      </button>
+    </div>
+
+    <!-- 와인 카드 그리드 -->
+    <div class="appContainer">
+      <!-- 쇼핑 중 상태 -->
+      <template v-if="!viewing">
+        <div
+                class="wine-card"
+                v-for="wine in pageWines"
+                :key="wine.id"
+        >
+          <p>{{ wine.wine }}</p>
+          <img :src="wine.image" :alt="wine.wine">
+
+          <button
+            class="btn"
+            :class="likes.includes(wine.id) ? 'btn-secondary' : 'btn-primary'"
+            @click="toggleLike(wine.id)"
+          >
+            {{ likes.includes(wine.id) ? 'Hate' : 'Like'}}
+          </button>
+
+
+        </div>
+      </template>
+      <!-- 쇼핑 완료 상태 -->
+      <template v-else>
+        <div
+          class="wine-card"
+          v-for="wine in totalLikes"
+          :key="wine.id"
+        >
+          <p>{{ wine.wine }}</p>
+          <img :src="wine.image" :alt="wine.wine"/>
+        </div>
+      </template>
+    </div>
+  </template>
+</div>
+<script>
+  const { createApp, reactive, onMounted, toRefs, computed } = Vue;
+  createApp({
+    setup() {
+      const state = reactive({
+        isLoading : true,   // 로딩 표시 토글
+        wines : [],          // 전체 와인 데이터
+        viewing : false,     // 쇼핑 중 or 쇼핑 완료 토글
+        pageIndex : 0,      // 현재 페이지 (0부터)
+        pageSize : 12,      // 페이지당 아이템 개수
+        likes: []           // 좋아요 한 wine id 목록
+      });
+
+      // totalPages : 전체 페이지 수
+      const totalPages = computed(() =>
+        Math.ceil(state.wines.length / state.pageSize)
+      );
+      // pageWines : 현재 페이지에 표시할 와인 목록
+      const pageWines = computed(() =>
+        state.wines.slice(
+                state.pageIndex * state.pageSize,
+                (state.pageIndex + 1) * state.pageSize
+        )
+      );
+      // totalLikes : likes 배열에 포함 된 id 들의 전체 와인 데이터 목록
+      const totalLikes = computed(() =>
+        state.wines.filter(wine => state.likes.includes(wine.id))
+      );
+
+      // 기능 메서드
+      const goBack = () => { if(state.pageIndex > 0) state.pageIndex--; };
+      const goNext = () => { if(state.pageIndex + 1 < totalPages.value) state.pageIndex++; };
+      const toggleViewing = () => state.viewing = !state.viewing;
+      const toggleLike = id => {
+        if(state.likes.includes(id)) {
+          // 좋아요 목록에서 제거
+          state.likes = state.likes.filter(wid => wid !== id);
+        } else {
+          // 좋아요 목록에 추가
+          state.likes.push(id);
+        }
+      };
+
+      // DOM 요소로 컴포넌트가 삽입 된 직후 동작하는 라이프사이클 훅
+      onMounted(async () => {
+        console.log("[mounted] 데이터 fetch 시작");
+        const resp = await fetch('https://api.sampleapis.com/wines/reds');
+        state.wines = await resp.json();
+        state.isLoading = false;
+        console.log("[mounted] 데이터 fetch 완료 & 화면 표시");
+      });
+
+      // toRefs : reactive 객체를 template 에서 개별 ref 로 사용할 수 있도록 변환
+      return {
+        ...toRefs(state),
+        totalPages,
+        pageWines,
+        totalLikes,
+        goBack,
+        goNext,
+        toggleLike,
+        toggleViewing
+      }
+    }
+  }).mount("#app");
+</script>
+</body>
+</html>

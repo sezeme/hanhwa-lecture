@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+        .lightgray { color : lightgray; }
+    </style>
+</head>
+<body>
+<div id="app">
+    <!-- 루트에서 child-demo 컴포넌트의 mount/unmount를 제어한다. -->
+    <button @click="show = !show">
+        {{ show ? '언마운트' : '마운트' }} 컴포넌트
+    </button>
+    <!-- v-if로 child-demo의 mount/unmount를 트리거한다. -->
+    <child-demo v-if="show"/>
+</div>
+<script>
+    const {
+        createApp,
+        ref,
+        onBeforeMount,
+        onMounted,
+        onBeforeUpdate,
+        onUpdated,
+        onBeforeUnmount,
+        onUnmounted
+    } = Vue;
+
+    // 자식 컴포넌트
+    const ChildDemo = {
+        template : `
+            <div>
+              <button @click="startLoading">로딩 시작</button>
+              <button @click="toggleHighlight">하이라이트 토글</button>
+              <!-- ref를 설정한 div : 업데이트 전 후 상태를 비교할 대상 -->
+              <div ref="contentRef">
+                <div v-if="!loadingState">로딩을 준비합니다.</div>
+                <div v-else :class="{ lightgray : isHighlighted }">컨텐츠 표시 중</div>
+              </div>
+            </div>
+        `,
+        setup() {
+            const loadingState = ref(false);
+            const isHighlighted = ref(false);
+            const contentRef = ref(null);
+
+            const startLoading = () => loadingState.value = true;
+            const toggleHighlight = () => isHighlighted.value = !isHighlighted.value;
+
+            /* 초기 상태 확인, 특정 라이브러리가 컴포넌트 로딩 전에 초기화가 필요한 경우 사용 */
+            onBeforeMount(() => {
+                console.log("1 onBeforeMount : DOM에 붙기 직전");
+            });
+            /* DOM 노드를 안전하게 조작할 수 있는 시점이며 API 호출 시점으로 많이 사용 */
+            onMounted(() => {
+                console.log("2 onMounted : 첫 렌더링 완료(DOM에 삽입 완료)");
+            });
+            /* 이전 DOM 상태를 참조하거나 업데이트 직전에 값을 검증해야 할 때 사용 */
+            onBeforeUpdate(() => {
+                const prev = contentRef.value?.innerText.trim();
+                console.log("3 onBeforeUpdate : 이전 컨텐츠", prev);
+            });
+            /* 변경 된 DOM을 기반으로 스크롤 위치 보정 같은 후처리 로직에 사용 */
+            onUpdated(() => {
+                const now = contentRef.value?.innerText.trim();
+                console.log("4 onUpdated : 현재 컨텐츠", now);
+            });
+            /* setTimeout, setInterval, 외부 이벤트 리스너 등을 제거야해 메모리 누수, 콜백 호출 오류 방지 */
+            onBeforeUnmount(() => {
+                console.log("5 onBeforeUnmount : 언마운트 직전");
+            });
+            /* 인스턴스간 공유 리소스를 clean-up (최종 정리) 하는 로직에 사용 */
+            onUnmounted(() => {
+                console.log("6 onUnmounted : 언마운트 완료");
+            });
+
+            return {
+                loadingState, isHighlighted,
+                contentRef,
+                startLoading, toggleHighlight
+            }
+        }
+    };
+
+    const app = createApp({
+        setup() {
+            const show = ref(true);
+            return { show }
+        }
+    });
+
+    app.component('child-demo', ChildDemo);
+    app.mount('#app');
+</script>
+
+</body>
+</html>

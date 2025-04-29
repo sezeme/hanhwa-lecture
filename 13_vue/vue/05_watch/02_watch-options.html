@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+<body>
+<!--
+  watch options : watch 함수의 3번째 인자로 전달 되는 옵션 객체이다.
+  이 옵션을 통해 watch의 동작을 세밀하게 제어할 수 있다.
+-->
+<div id="step01">
+  <p>{{ num }}</p>
+  <button @click="num++">num++</button>
+</div>
+<div id="step02">
+  <p>{{ num }}</p>
+  <button @click="num++">num++</button>
+</div>
+<script>
+  const { createApp, ref, watch } = Vue;
+  createApp({
+    setup() {
+      const num = ref(0);
+      watch(num, (nv, ov) => {
+        console.log(`nv : ${nv}, ov : ${ov}`);
+      }, { immediate : true });
+      return {
+        num
+      }
+    }
+  }).mount("#step01");
+
+  createApp({
+    setup() {
+      const num = ref(0);
+      watch(num, (nv, ov) => {
+        console.log(`nv : ${nv}, ov : ${ov}`);
+      }, { once : true });
+      return {
+        num
+      }
+    }
+  }).mount("#step02");
+</script>
+
+</body>
+</html>
