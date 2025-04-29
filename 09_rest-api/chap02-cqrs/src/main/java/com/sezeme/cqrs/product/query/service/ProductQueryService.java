@@ -50,7 +50,7 @@ public class ProductQueryService {
                 .products(products)
                 .pagination(Pagination.builder()
                         .currentPage(page)
-                        .totalPage((int) Math.ceil((double) totalItems / size))
+                        .totalPages((int) Math.ceil((double) totalItems / size))
                         .totalItems(totalItems)
                         .build())
                 .build();
