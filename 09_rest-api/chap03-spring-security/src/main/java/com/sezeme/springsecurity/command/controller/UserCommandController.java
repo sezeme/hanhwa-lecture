@@ -1,4 +1,4 @@
-package com.sezeme.springsecurity.controller;
+package com.sezeme.springsecurity.command.controller;
 
 import com.sezeme.springsecurity.command.dto.UserCreateRequest;
 import com.sezeme.springsecurity.command.service.UserCommandService;
@@ -25,4 +25,5 @@ public class UserCommandController {
                 .status(HttpStatus.CREATED)
                 .body(ApiResponse.success(null));
     }
+
 }
