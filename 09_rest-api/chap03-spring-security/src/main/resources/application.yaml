@@ -16,8 +16,9 @@ mybatis:
   configuration:
     map-underscore-to-camel-case: true
   mapper-locations: mappers/**/*.xml
-  type-aliases-package: com.sezeme.cqrs.product.query.dto
+  type-aliases-package: com.ohgiraffers.springsecurity.query.dto
 
-#image:
-#  image-dir: C:/upload/productimgs
-#  image-url: http://localhost:8080/productimgs/
+jwt:
+  secret: LH9QZL8upsPBfuDY+Dkb1kT9DZIIUSuA2u4O6Lfi3mkEfeWtETpVTcR/8SMZdJWn/xNTuCQBE6rBvDXgnVmscQ==
+  expiration: 1800000 # 30? ????? (access token)
+  refresh-expiration: 604800000 # 7? (refresh token)
