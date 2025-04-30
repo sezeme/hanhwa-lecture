@@ -1,6 +1,35 @@
 <script setup>
 
 import ProductDetail from "@/features/product/componenets/ProductDetail.vue";
+import {onMounted, ref} from "vue";
+import {getProduct} from "@/features/product/api.js";
+import {useRoute, useRouter} from "vue-router";
+
+const route = useRoute();
+const router = useRouter();
+const isLoading = ref(true);
+const error = ref(null);
+const productId = ref(route.params.id);
+const product = ref(null);
+
+const fetchProduct = async () => {
+  isLoading.value = true;
+  error.value = null;
+  try {
+    const resp = await getProduct(productId.value);
+    product.value = resp.data.data.product;
+    isLoading.value = false;
+  } catch (e) {
+    console.log('상품 상세 조회 실패', e);
+    error.value = '상품 정보를 불러오지 못했습니다';
+  }
+}
+
+const goToEditPage = () => {}
+const confirmDelete = () => {}
+
+
+onMounted(fetchProduct);
 </script>
 
 <template>

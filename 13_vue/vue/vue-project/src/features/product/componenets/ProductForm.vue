@@ -2,22 +2,48 @@
   <form @submit.prevent="submitForm" class="container mt-4">
     <div class="mb-3">
       <label for="productName" class="form-label">상품명</label>
-      <input type="text" id="productName" v-model="formData.productName" class="form-control" required />
+      <input
+          type="text"
+          id="productName"
+          v-model="formData.productName"
+          class="form-control"
+          required
+          :disabled="disabled"
+      />
     </div>
 
     <div class="mb-3">
       <label for="productPrice" class="form-label">상품 가격</label>
-      <input type="number" id="productPrice" v-model.number="formData.productPrice" class="form-control" required />
+      <input
+          type="number"
+          id="productPrice"
+          v-model.number="formData.productPrice"
+          class="form-control"
+          required
+          :disabled="disabled"
+      />
     </div>
 
     <div class="mb-3">
       <label for="productDescription" class="form-label">상품 설명</label>
-      <textarea id="productDescription" v-model="formData.productDescription" class="form-control" required></textarea>
+      <textarea
+          id="productDescription"
+          v-model="formData.productDescription"
+          class="form-control"
+          required
+          :disabled="disabled"
+      ></textarea>
     </div>
 
     <div class="mb-3">
       <label for="categoryCode" class="form-label">카테고리</label>
-      <select id="categoryCode" v-model.number="formData.categoryCode" class="form-select" required>
+      <select
+          id="categoryCode"
+          v-model.number="formData.categoryCode"
+          class="form-select"
+          required
+          :disabled="disabled"
+      >
         <option value="1">식사</option>
         <option value="2">디저트</option>
         <option value="3">음료</option>
@@ -26,13 +52,26 @@
 
     <div class="mb-3">
       <label for="productStock" class="form-label">재고 수량</label>
-      <input type="number" id="productStock" v-model.number="formData.productStock" class="form-control" required />
+      <input
+          type="number"
+          id="productStock"
+          v-model.number="formData.productStock"
+          class="form-control"
+          required
+          :disabled="disabled"
+      />
     </div>
 
     <!-- 상태 선택: 수정 모드에서만 보여줌 -->
     <div v-if="isEditMode" class="mb-3">
       <label for="status" class="form-label">상태</label>
-      <select id="status" v-model="formData.status" class="form-select" required>
+      <select
+          id="status"
+          v-model="formData.status"
+          class="form-select"
+          required
+          :disabled="disabled"
+      >
         <option value="USABLE">사용 가능</option>
         <option value="DISABLE">사용 불가</option>
       </select>
@@ -48,6 +87,7 @@
           class="form-control"
           accept="image/*"
           :required="!isEditMode"
+          :disabled="disabled"
       />
     </div>
     <button type="submit" class="btn btn-primary w-100" :disabled="!isFormValid">{{ submitLabel }}</button>
@@ -57,9 +97,10 @@
 <script setup>
 import { ref, watch, computed } from 'vue';
 
-const {initialData, submitLabel} = defineProps({
+const {initialData, submitLabel, disabled } = defineProps({
   initialData: { type: Object, default: null },
-  submitLabel: { type: String, default: '제출' }
+  submitLabel: { type: String, default: '제출' },
+  disabled:    { type: Boolean, default: false }
 });
 
 const emit = defineEmits(['submit']);
