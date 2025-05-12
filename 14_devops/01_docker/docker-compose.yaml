@@ -1,0 +1,42 @@
+# Docker Compose 파일의 버전을 정의한다. 최신 기능과 호환성을 결정한다.
+#version: '3.8'
+services:
+  backend: # 서비스이름
+    # 해당 디렉토리의 Dockerfile을 사용해 이미지를 빌드
+    build: ./chap01-01-boot-project
+    # 컨테이너 이름을 'backend'로 설정
+    container_name: backend
+    # 호스트의 8080 포트를 컨테이너의 8080 포트로 매핑
+    ports:
+      - "8080:8080"
+    # 사용자 정의 네트워크에 연결
+    networks:
+      - app-public
+      - app-private
+
+  frontend:
+    # 해당 디렉토리의 Dockerfile을 사용해 이미지를 빌드
+    build: ./chap01-02-vue-project
+    # 컨테이너 이름을 'frontend'로 설정
+    container_name: frontend
+    # 호스트의 5173 포트를 컨테이너의 5173 포트로 매핑
+    ports:
+      - "5173:5173"
+    # 동일 네트워크에 연결하여 DNS로 통신 가능
+    networks:
+      - app-public
+
+  tester:
+    image: alpine
+    container_name: net-tester
+    command: sleep 3600       # 실습용으로 쉘 접근 전용
+    networks:
+      - app-public
+
+# 네트워크 정의
+networks:
+  app-public:
+    driver: bridge
+  app-private:
+    driver: bridge
+    internal: true            # 외부(호스트) 라우팅 차단
